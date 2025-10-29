@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "words": [
+    "novaratutor",
+    "Segoe",
+    "Neue",
+    "Noto",
+    "Favicons",
+    "favicons",
+    "Vercel",
+    "vercel",
+    "sendgrid",
+    "SENDGRID",
+    "jsonplaceholder",
+    "ntvs",
+    "njsproj"
+  ]
+}
