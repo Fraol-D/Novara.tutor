@@ -1,9 +1,10 @@
 import Navbar from './components/Navbar'
 import Hero from './sections/Hero'
 import HowItWorks from './sections/HowItWorks'
-import VisualSuccess from './sections/VisualSuccess'
+import DiagnosticBenefits from './sections/DiagnosticBenefits'
+import QualityTutors from './sections/QualityTutors'
+import Pricing from './sections/Pricing'
 import BookingCTA from './sections/BookingCTA'
-import Testimonials from './sections/Testimonials'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -13,9 +14,10 @@ export default function App() {
       <main>
         <Hero />
         <HowItWorks />
-        <VisualSuccess />
+        <DiagnosticBenefits />
+        <QualityTutors />
+        <Pricing />
         <BookingCTA />
-        <Testimonials />
       </main>
       <Footer />
     </div>

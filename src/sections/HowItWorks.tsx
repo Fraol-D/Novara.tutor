@@ -1,21 +1,21 @@
 import { motion } from 'framer-motion'
-import { Calendar, UserCheck, Video } from 'lucide-react'
+import { CalendarClock, ListChecks, Sparkles } from 'lucide-react'
 
 const steps = [
   {
-    icon: Calendar,
-    title: 'Book a Session',
-    description: 'Choose your subject and preferred schedule.',
+    icon: CalendarClock,
+    title: 'Book a free diagnostic (20 minutes)',
+    description: 'Pick a time and share your subject focus.',
   },
   {
-    icon: UserCheck,
-    title: 'We Match You with a Skilled Tutor',
-    description: 'Your child is paired with a verified tutor experienced in their grade level.',
+    icon: ListChecks,
+    title: 'Get a clear learning plan',
+    description: 'We outline strengths, gaps, and next steps for your child.',
   },
   {
-    icon: Video,
-    title: 'Learn Live Online',
-    description: '1:1 interactive tutoring sessions that build confidence and improve grades.',
+    icon: Sparkles,
+    title: 'Continue with tutoring (optional)',
+    description: '1-on-1 sessions starting at $25/hr — only if you want to continue.',
   },
 ]
 
@@ -34,7 +34,7 @@ export default function HowItWorks() {
             How It Works
           </h2>
           <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
-            Getting started is simple. Here&rsquo;s how we help your child succeed:
+            Clear next steps from diagnostic to tutoring — no subscription required.
           </p>
         </motion.div>
 

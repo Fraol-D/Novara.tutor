@@ -14,11 +14,14 @@ export default function Footer() {
             <a href="#how-it-works" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
               How It Works
             </a>
-            <a href="#booking" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
-              Book Lesson
+            <a href="#diagnostic" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
+              What You Get
             </a>
-            <a href="#testimonials" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
-              Testimonials
+            <a href="#pricing" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
+              Pricing
+            </a>
+            <a href="#booking" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
+              Book Diagnostic
             </a>
           </div>
           

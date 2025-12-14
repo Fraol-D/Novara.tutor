@@ -3,7 +3,8 @@ import Logo from './Logo'
 
 const navItems = [
   { label: 'How It Works', href: '#how-it-works' },
-  { label: 'Testimonials', href: '#testimonials' },
+  { label: 'What You Get', href: '#diagnostic' },
+  { label: 'Pricing', href: '#pricing' },
 ]
 
 export default function Navbar() {
@@ -25,7 +26,7 @@ export default function Navbar() {
             href="#booking"
             className="inline-flex items-center rounded-lg bg-primary hover:bg-accent dark:bg-primary-dark dark:hover:bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           >
-            Book Free Lesson
+            Book Free Diagnostic
           </a>
         </div>
         <div className="flex md:hidden items-center gap-2">
@@ -59,7 +60,7 @@ export default function Navbar() {
               onClick={() => setOpen(false)}
               className="mt-2 inline-flex w-max items-center rounded-lg bg-primary hover:bg-accent dark:bg-primary-dark dark:hover:bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:shadow-md transition-all"
             >
-              Book Free Lesson
+              Book Free Diagnostic
             </a>
           </div>
         </div>

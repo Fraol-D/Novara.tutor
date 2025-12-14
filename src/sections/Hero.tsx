@@ -23,18 +23,26 @@ export default function Hero() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-semibold tracking-tight text-text dark:text-text-dark leading-tight">
-              Affordable 1:1 Tutoring for U.S. Students — Try Your First Lesson{' '}
-              <span className="text-primary dark:text-primary-dark">Free</span>
+              Free 20-Minute Academic Diagnostic (No obligation)
             </h1>
             <p className="mt-6 text-lg sm:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-              Expert tutors. Personalized sessions. Real improvement — right from your home.
+              A quick 1-on-1 assessment to identify learning gaps and recommend the best next steps for your child.
             </p>
-            <div className="mt-8">
+            <p className="mt-3 text-sm font-medium text-gray-500 dark:text-gray-400">
+              Online • Middle & High School • Zoom
+            </p>
+            <div className="mt-8 flex items-center gap-4 flex-wrap">
               <a
                 href="#booking"
                 className="inline-flex items-center rounded-lg bg-primary hover:bg-accent dark:bg-primary-dark dark:hover:bg-accent px-8 py-4 text-lg font-medium text-white shadow-lg hover:shadow-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
               >
-                Book a Free Lesson
+                Book Free Diagnostic
+              </a>
+              <a
+                href="#how-it-works"
+                className="text-primary dark:text-primary-dark hover:text-accent dark:hover:text-accent font-semibold transition-colors"
+              >
+                See how it works
               </a>
             </div>
           </motion.div>

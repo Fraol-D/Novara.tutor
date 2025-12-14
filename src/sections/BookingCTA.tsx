@@ -14,10 +14,10 @@ export default function BookingCTA() {
           {/* Header */}
           <div className="text-center mb-10">
             <h2 className="text-3xl sm:text-4xl font-semibold text-text dark:text-text-dark">
-              Start Your Free Lesson Today — No Commitment Required
+              Book your free diagnostic
             </h2>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
-              We&rsquo;ll contact you within 24 hours to schedule your first tutoring session.
+              Fill the form and we&rsquo;ll email you within 24 hours to confirm a time.
             </p>
           </div>
 
@@ -29,7 +29,7 @@ export default function BookingCTA() {
               height="800" 
               frameBorder="0"
               className="w-full"
-              title="Book Free Lesson Form"
+              title="Book Free Diagnostic Form"
             >
               Loading…
             </iframe>
