@@ -24,7 +24,7 @@ export default function BookingCTA() {
           {/* Google Form Embed */}
           <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg">
             <iframe 
-              src="https://docs.google.com/forms/d/e/1FAIpQLSet5Kf2B7dLXelsO4Lggmq3G8ncX5z2dJfJpSJ-D1Gbh8qoUw/viewform?embedded=true" 
+              src="https://forms.gle/RkzVcMGGd7rCsREL9" 
               width="100%" 
               height="800" 
               frameBorder="0"
