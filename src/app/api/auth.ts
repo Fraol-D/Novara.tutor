@@ -1,5 +1,5 @@
 import { apiRequest } from './client'
-import type { AuthResponse } from '../types'
+import type { AuthResponse, UserRole } from '../types'
 
 type LoginPayload = {
   email: string
@@ -10,6 +10,7 @@ type RegisterPayload = {
   fullName: string
   email: string
   password: string
+  role?: UserRole
 }
 
 export const authApi = {

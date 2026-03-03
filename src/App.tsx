@@ -6,6 +6,9 @@ import LoginPage from './app/pages/LoginPage'
 import PaymentsPage from './app/pages/PaymentsPage'
 import SessionsPage from './app/pages/SessionsPage'
 import StudentsPage from './app/pages/StudentsPage'
+import TutorDashboardPage from './app/pages/TutorDashboardPage'
+import TutorProfilePage from './app/pages/TutorProfilePage'
+import TutorAvailabilityPage from './app/pages/TutorAvailabilityPage'
 import LandingPage from './marketing/LandingPage'
 
 export default function App() {
@@ -14,12 +17,22 @@ export default function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
 
-      <Route element={<ProtectedRoute />}>
+      {/* Admin routes */}
+      <Route element={<ProtectedRoute requiredRole="admin" />}>
         <Route path="/app" element={<AppShell />}>
           <Route index element={<DashboardPage />} />
           <Route path="students" element={<StudentsPage />} />
           <Route path="sessions" element={<SessionsPage />} />
           <Route path="payments" element={<PaymentsPage />} />
+        </Route>
+      </Route>
+
+      {/* Tutor routes */}
+      <Route element={<ProtectedRoute requiredRole="tutor" />}>
+        <Route path="/app/tutor" element={<AppShell />}>
+          <Route index element={<TutorDashboardPage />} />
+          <Route path="profile" element={<TutorProfilePage />} />
+          <Route path="availability" element={<TutorAvailabilityPage />} />
         </Route>
       </Route>
 

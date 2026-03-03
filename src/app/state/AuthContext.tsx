@@ -1,14 +1,17 @@
 import { createContext, PropsWithChildren, useContext, useMemo, useState } from 'react'
+import type { UserRole } from '../types'
 
-type AuthUser = {
+export type AuthUser = {
   id: string
   email: string
   fullName: string
+  role: UserRole
 }
 
 type AuthContextValue = {
   token: string | null
   user: AuthUser | null
+  role: UserRole | null
   isAuthenticated: boolean
   setSession: (payload: { token: string; user: AuthUser }) => void
   clearSession: () => void
@@ -36,6 +39,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     () => ({
       token,
       user,
+      role: user?.role ?? null,
       isAuthenticated: Boolean(token),
       setSession: (payload) => {
         setToken(payload.token)

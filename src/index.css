@@ -36,6 +36,46 @@ body {
   }
 
   .surface-card {
-    @apply rounded-xl border border-primary/15 bg-white dark:bg-gray-900 shadow-sm;
+    @apply rounded-xl bg-white dark:bg-gray-900 shadow-sm;
+  }
+
+  /* Glassmorphism card */
+  .glass-card {
+    @apply rounded-2xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.3)];
+  }
+
+  /* Stat card with hover lift */
+  .stat-card {
+    @apply rounded-xl bg-white dark:bg-gray-900 p-5 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  /* Form inputs */
+  .form-input {
+    @apply w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2.5 text-sm text-text dark:text-text-dark placeholder-gray-400 dark:placeholder-gray-500 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary;
+  }
+
+  /* Role selection card */
+  .role-card {
+    @apply flex flex-col items-center gap-1 rounded-xl border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 text-center transition-all cursor-pointer hover:border-primary/50 hover:bg-primary/5;
+  }
+
+  .role-card-active {
+    @apply border-primary bg-primary/10 text-primary;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    @apply bg-gray-200 dark:bg-gray-700 animate-pulse rounded;
   }
 }
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out both;
+}
+

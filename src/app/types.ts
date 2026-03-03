@@ -1,8 +1,11 @@
+export type UserRole = 'admin' | 'tutor'
+
 export type AuthResponse = {
   user: {
     id: string
     email: string
     fullName: string
+    role?: UserRole
   }
   accessToken: string
 }
