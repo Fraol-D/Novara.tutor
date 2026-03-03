@@ -25,3 +25,17 @@ body {
     Noto Sans,
     sans-serif;
 }
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-primary hover:bg-accent dark:bg-primary-dark dark:hover:bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-primary/30 bg-white/80 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-800 px-5 py-2.5 text-sm font-medium text-text dark:text-text-dark transition-all;
+  }
+
+  .surface-card {
+    @apply rounded-xl border border-primary/15 bg-white dark:bg-gray-900 shadow-sm;
+  }
+}

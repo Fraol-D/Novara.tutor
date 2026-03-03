@@ -22,6 +22,7 @@ export default {
           DEFAULT: '#ffffff',
           dark: '#121212',
         },
+        sidebar: '#111c2e',
       },
       fontFamily: {
         sans: [
