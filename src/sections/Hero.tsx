@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 export default function Hero() {
   return (
@@ -34,10 +35,13 @@ export default function Hero() {
             <div className="mt-8 flex items-center gap-4 flex-wrap">
               <a
                 href="#booking"
-                className="inline-flex items-center rounded-lg bg-primary hover:bg-accent dark:bg-primary-dark dark:hover:bg-accent px-8 py-4 text-lg font-medium text-white shadow-lg hover:shadow-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                className="btn-primary !px-8 !py-4 !text-lg"
               >
                 Book Free Diagnostic
               </a>
+              <Link to="/app" className="btn-secondary !px-6 !py-4 !text-base">
+                Open Dashboard
+              </Link>
               <a
                 href="#how-it-works"
                 className="text-primary dark:text-primary-dark hover:text-accent dark:hover:text-accent font-semibold transition-colors"
@@ -49,8 +53,7 @@ export default function Hero() {
 
           {/* Right Column: Illustration */}
           <motion.div
-            className="relative rounded-3xl p-6 backdrop-blur-sm overflow-hidden max-w-[500px] mx-auto"
-            style={{ background: 'linear-gradient(135deg, #2e2f30 0%, #00e1ff 100%)' }}
+            className="relative rounded-3xl p-6 backdrop-blur-sm overflow-hidden max-w-[500px] mx-auto bg-gradient-to-br from-text via-sidebar to-primary-dark"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-100px' }}

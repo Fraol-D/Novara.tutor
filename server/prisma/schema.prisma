@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+}
+
+enum StudentStatus {
+  active
+  inactive
+}
+
+enum PaymentStatus {
+  paid
+  unpaid
+}
+
+model Branch {
+  id        String    @id @default(uuid())
+  name      String
+  code      String    @unique
+  users     User[]
+  students  Student[]
+  tutors    Tutor[]
+  sessions  Session[]
+  payments  Payment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  fullName     String
+  role         UserRole @default(ADMIN)
+  branchId     String?
+  branch       Branch?  @relation(fields: [branchId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([branchId])
+}
+
+model Student {
+  id          String        @id @default(uuid())
+  fullName    String
+  grade       String
+  parentName  String
+  parentPhone String
+  subjects    String[]
+  monthlyFee  Decimal       @db.Decimal(10, 2)
+  status      StudentStatus @default(active)
+  isArchived  Boolean       @default(false)
+  branchId    String?
+  branch      Branch?       @relation(fields: [branchId], references: [id])
+  sessions    Session[]
+  payments    Payment[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([branchId])
+  @@index([status])
+}
+
+model Tutor {
+  id               String    @id @default(uuid())
+  fullName         String
+  primarySubject   String
+  secondarySubjects String[]
+  branchId         String?
+  branch           Branch?   @relation(fields: [branchId], references: [id])
+  sessions         Session[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([branchId])
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id])
+  tutorId   String?
+  tutor     Tutor?   @relation(fields: [tutorId], references: [id])
+  subject   String
+  date      DateTime
+  attended  Boolean  @default(false)
+  branchId  String?
+  branch    Branch?  @relation(fields: [branchId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studentId])
+  @@index([tutorId])
+  @@index([date])
+  @@index([branchId])
+}
+
+model Payment {
+  id        String        @id @default(uuid())
+  studentId String
+  student   Student       @relation(fields: [studentId], references: [id])
+  month     String
+  amount    Decimal       @db.Decimal(10, 2)
+  status    PaymentStatus @default(unpaid)
+  paidAt    DateTime?
+  branchId  String?
+  branch    Branch?       @relation(fields: [branchId], references: [id])
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([studentId])
+  @@index([month])
+  @@index([status])
+  @@index([branchId])
+}
