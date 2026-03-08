@@ -1,14 +1,13 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import AppShell from './app/layout/AppShell'
 import ProtectedRoute from './app/layout/ProtectedRoute'
-import DashboardPage from './app/pages/DashboardPage'
+import AccountSetupPage from './app/pages/AccountSetupPage'
 import LoginPage from './app/pages/LoginPage'
-import PaymentsPage from './app/pages/PaymentsPage'
-import SessionsPage from './app/pages/SessionsPage'
-import StudentsPage from './app/pages/StudentsPage'
-import TutorDashboardPage from './app/pages/TutorDashboardPage'
-import TutorProfilePage from './app/pages/TutorProfilePage'
-import TutorAvailabilityPage from './app/pages/TutorAvailabilityPage'
+import ParentAcademicGpsPage from './app/pages/ParentAcademicGpsPage'
+import ParentAddChildPage from './app/pages/ParentAddChildPage'
+import ParentDashboardPage from './app/pages/ParentDashboardPage'
+import ParentReportsPage from './app/pages/ParentReportsPage'
+import TutorOnboardingPage from './app/pages/TutorOnboardingPage'
 import LandingPage from './marketing/LandingPage'
 
 export default function App() {
@@ -16,25 +15,28 @@ export default function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<LoginPage initialMode="register" />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/setup" element={<AccountSetupPage />} />
+      </Route>
 
-      {/* Admin routes */}
-      <Route element={<ProtectedRoute requiredRole="admin" />}>
-        <Route path="/app" element={<AppShell />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="students" element={<StudentsPage />} />
-          <Route path="sessions" element={<SessionsPage />} />
-          <Route path="payments" element={<PaymentsPage />} />
+      <Route element={<ProtectedRoute requiredRole="parent" />}>
+        <Route path="/app/parent" element={<AppShell />}>
+          <Route index element={<ParentDashboardPage />} />
+          <Route path="add-child" element={<ParentAddChildPage />} />
+          <Route path="academic-gps" element={<ParentAcademicGpsPage />} />
+          <Route path="reports" element={<ParentReportsPage />} />
         </Route>
       </Route>
 
-      {/* Tutor routes */}
       <Route element={<ProtectedRoute requiredRole="tutor" />}>
-        <Route path="/app/tutor" element={<AppShell />}>
-          <Route index element={<TutorDashboardPage />} />
-          <Route path="profile" element={<TutorProfilePage />} />
-          <Route path="availability" element={<TutorAvailabilityPage />} />
+        <Route path="/app" element={<AppShell />}>
+          <Route path="tutor/onboarding" element={<TutorOnboardingPage />} />
         </Route>
       </Route>
+
+      <Route path="/app/tutor" element={<Navigate to="/app/tutor/onboarding" replace />} />
+      <Route path="/app" element={<Navigate to="/app/parent" replace />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

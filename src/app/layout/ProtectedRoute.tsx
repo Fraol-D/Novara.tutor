@@ -7,15 +7,19 @@ type Props = {
 }
 
 export default function ProtectedRoute({ requiredRole }: Props) {
-  const { isAuthenticated, role } = useAuth()
+  const { isAuthenticated, role, setupCompleted } = useAuth()
   const location = useLocation()
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />
   }
 
+  if (!setupCompleted && location.pathname !== '/setup') {
+    return <Navigate to="/setup" replace />
+  }
+
   if (requiredRole && role !== requiredRole) {
-    const dest = role === 'tutor' ? '/app/tutor' : '/app'
+    const dest = role === 'tutor' ? '/app/tutor' : '/app/parent'
     return <Navigate to={dest} replace />
   }
 

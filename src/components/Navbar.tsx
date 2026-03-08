@@ -23,8 +23,7 @@ export default function Navbar() {
               {item.label}
             </a>
           ))}
-          <Link to="/login" className="btn-secondary">Login</Link>
-          <Link to="/app" className="btn-primary">Go to Dashboard</Link>
+          <Link to="/login" className="btn-primary">Sign In</Link>
         </div>
         <div className="flex md:hidden items-center gap-2">
           <button
@@ -52,8 +51,7 @@ export default function Navbar() {
                 {item.label}
               </a>
             ))}
-            <Link to="/login" onClick={() => setOpen(false)} className="mt-2 w-max btn-secondary">Login</Link>
-            <Link to="/app" onClick={() => setOpen(false)} className="w-max btn-primary">Go to Dashboard</Link>
+            <Link to="/login" onClick={() => setOpen(false)} className="mt-2 w-max btn-primary">Sign In</Link>
           </div>
         </div>
       )}

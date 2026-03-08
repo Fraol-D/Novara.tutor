@@ -1,25 +1,23 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../state/AuthContext'
 
-const adminNavItems = [
-  { label: 'Overview', to: '/app', icon: '📊' },
-  { label: 'Students', to: '/app/students', icon: '👥' },
-  { label: 'Sessions', to: '/app/sessions', icon: '📅' },
-  { label: 'Payments', to: '/app/payments', icon: '💰' },
+const parentNavItems = [
+  { label: 'Dashboard', to: '/app/parent', icon: '📊' },
+  { label: 'Add Child', to: '/app/parent/add-child', icon: '👶' },
+  { label: 'Academic GPS', to: '/app/parent/academic-gps', icon: '🧭' },
+  { label: 'Reports', to: '/app/parent/reports', icon: '📘' },
 ]
 
 const tutorNavItems = [
-  { label: 'Dashboard', to: '/app/tutor', icon: '📊' },
-  { label: 'My Profile', to: '/app/tutor/profile', icon: '👤' },
-  { label: 'Availability', to: '/app/tutor/availability', icon: '🗓️' },
+  { label: 'Onboarding', to: '/app/tutor/onboarding', icon: '📝' },
 ]
 
 export default function AppShell() {
   const { user, role, clearSession } = useAuth()
   const navigate = useNavigate()
-  const navItems = role === 'tutor' ? tutorNavItems : adminNavItems
-  const roleLabel = role === 'tutor' ? 'Tutor Portal' : 'Admin Dashboard'
-  const roleBadge = role === 'tutor' ? 'Tutor' : 'Admin'
+  const navItems = role === 'tutor' ? tutorNavItems : parentNavItems
+  const roleLabel = role === 'tutor' ? 'Tutor Portal' : 'Parent Dashboard'
+  const roleBadge = role === 'tutor' ? 'Tutor' : 'Parent'
 
   const handleLogout = () => {
     clearSession()
@@ -53,7 +51,7 @@ export default function AppShell() {
             <NavLink
               key={item.to}
               to={item.to}
-              end={item.to === '/app' || item.to === '/app/tutor'}
+              end={item.to === '/app/parent' || item.to === '/app/tutor/onboarding'}
               className={({ isActive }) =>
                 `flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm transition-all ${
                   isActive

@@ -2,31 +2,48 @@ import { FormEvent, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { authApi } from '../api/auth'
 import { useAuth } from '../state/AuthContext'
-import type { UserRole } from '../types'
 
 type AuthMode = 'login' | 'register'
 
-export default function LoginPage() {
+type LoginPageProps = {
+  initialMode?: AuthMode
+}
+
+export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
   const navigate = useNavigate()
   const location = useLocation()
-  const { setSession, isAuthenticated, role } = useAuth()
+  const { setSession, isAuthenticated, role, setupCompleted } = useAuth()
 
-  const [mode, setMode] = useState<AuthMode>('login')
+  const [mode, setMode] = useState<AuthMode>(initialMode)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [selectedRole, setSelectedRole] = useState<UserRole>('admin')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const toFrontendRole = (backendRole: 'PARENT' | 'TUTOR' | null): 'parent' | 'tutor' | null => {
+    if (backendRole === 'PARENT') return 'parent'
+    if (backendRole === 'TUTOR') return 'tutor'
+    return null
+  }
+
   useEffect(() => {
     if (isAuthenticated) {
-      const dest = role === 'tutor' ? '/app/tutor' : '/app'
+      if (!setupCompleted) {
+        navigate('/setup', { replace: true })
+        return
+      }
+      const dest = role === 'tutor' ? '/app/tutor/onboarding' : '/app/parent'
       navigate(dest, { replace: true })
     }
-  }, [isAuthenticated, role, navigate])
+  }, [isAuthenticated, role, setupCompleted, navigate])
 
-  const redirectPath = (location.state as { from?: string } | null)?.from ?? (selectedRole === 'tutor' ? '/app/tutor' : '/app')
+  useEffect(() => {
+    setMode(initialMode)
+  }, [initialMode])
+
+  const redirectPath = (location.state as { from?: string } | null)?.from ?? '/setup'
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -37,15 +54,32 @@ export default function LoginPage() {
       const response =
         mode === 'login'
           ? await authApi.login({ email, password })
-          : await authApi.register({ fullName, email, password, role: selectedRole })
+          : await authApi.register({ firstName, lastName, email, password })
 
-      const userRole: UserRole = response.user.role ?? (mode === 'register' ? selectedRole : 'admin')
+      const userRole = toFrontendRole(response.user.role)
 
       setSession({
         token: response.accessToken,
-        user: { id: response.user.id, email: response.user.email, fullName: response.user.fullName, role: userRole },
+        user: {
+          id: response.user.id,
+          email: response.user.email,
+          firstName: response.user.firstName,
+          lastName: response.user.lastName,
+          fullName: response.user.fullName,
+          role: userRole,
+          setupCompleted: response.user.setupCompleted,
+          setupStep: response.user.setupStep,
+          country: response.user.country,
+          state: response.user.state,
+          phone: response.user.phone,
+          profilePictureUrl: response.user.profilePictureUrl,
+        },
       })
-      navigate(userRole === 'tutor' ? '/app/tutor' : redirectPath, { replace: true })
+      if (!response.user.setupCompleted) {
+        navigate('/setup', { replace: true })
+        return
+      }
+      navigate(userRole === 'tutor' ? '/app/tutor/onboarding' : redirectPath, { replace: true })
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : mode === 'login' ? 'Login failed' : 'Registration failed')
     } finally {
@@ -88,17 +122,32 @@ export default function LoginPage() {
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             {mode === 'register' && (
-              <div>
-                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Full Name</label>
-                <input
-                  required
-                  type="text"
-                  placeholder="Your full name"
-                  className="form-input"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-              </div>
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">First Name</label>
+                    <input
+                      required
+                      type="text"
+                      placeholder="First name"
+                      className="form-input"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Last Name</label>
+                    <input
+                      required
+                      type="text"
+                      placeholder="Last name"
+                      className="form-input"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </>
             )}
 
             <div>
@@ -123,31 +172,6 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </div>
-
-            {/* Role selection (both login & register) */}
-            <div>
-              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-2">I am a…</label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('admin')}
-                  className={`role-card ${selectedRole === 'admin' ? 'role-card-active' : ''}`}
-                >
-                  <span className="text-xl mb-1">🏫</span>
-                  <span className="text-sm font-medium">Admin / Manager</span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">Manage students & sessions</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('tutor')}
-                  className={`role-card ${selectedRole === 'tutor' ? 'role-card-active' : ''}`}
-                >
-                  <span className="text-xl mb-1">🎓</span>
-                  <span className="text-sm font-medium">Tutor</span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">Manage your schedule</span>
-                </button>
-              </div>
             </div>
 
             <button type="submit" className="btn-primary w-full mt-2" disabled={loading}>

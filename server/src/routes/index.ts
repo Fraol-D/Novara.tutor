@@ -1,8 +1,8 @@
 import { Router } from 'express';
+import accountRouter from './accountRoutes.js';
 import authRouter from './authRoutes.js';
-import paymentRouter from './paymentRoutes.js';
-import sessionRouter from './sessionRoutes.js';
-import studentRouter from './studentRoutes.js';
+import parentRouter from './parentRoutes.js';
+import tutorOnboardingRouter from './tutorOnboardingRoutes.js';
 
 const apiRouter = Router();
 
@@ -11,8 +11,8 @@ apiRouter.get('/health', (_req, res) => {
 });
 
 apiRouter.use('/auth', authRouter);
-apiRouter.use('/students', studentRouter);
-apiRouter.use('/sessions', sessionRouter);
-apiRouter.use('/payments', paymentRouter);
+apiRouter.use('/account', accountRouter);
+apiRouter.use('/parent', parentRouter);
+apiRouter.use('/tutor-onboarding', tutorOnboardingRouter);
 
 export default apiRouter;

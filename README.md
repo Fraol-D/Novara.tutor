@@ -72,6 +72,39 @@ npm run build
 npm run preview
 ```
 
+## 🔐 Dashboard Auth Setup
+
+This repo includes a dashboard app with login/register routes:
+
+- `/login`
+- `/register`
+- `/app` (admin dashboard)
+- `/app/tutor` (tutor dashboard)
+
+To run auth locally:
+
+```bash
+# Terminal 1
+cd server
+npm install
+npm run dev
+
+# Terminal 2
+cp .env.local.example .env.local
+npm install
+npm run dev
+```
+
+Frontend auth requests use `VITE_API_BASE_URL`.
+
+For local development, set:
+
+```dotenv
+VITE_API_BASE_URL=http://localhost:4000/api
+```
+
+For production, set `VITE_API_BASE_URL` to your deployed backend API base URL (must include `/api`).
+
 ## 📂 Project Structure
 
 ```

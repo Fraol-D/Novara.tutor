@@ -8,117 +8,252 @@ datasource db {
 }
 
 enum UserRole {
-  SUPER_ADMIN
+  PARENT
+  TUTOR
   ADMIN
 }
 
-enum StudentStatus {
-  active
-  inactive
+enum TutorApplicationStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
 }
 
-enum PaymentStatus {
-  paid
-  unpaid
+enum ProficiencyLevel {
+  NATIVE
+  FLUENT
+  COMFORTABLE
 }
 
-model Branch {
-  id        String    @id @default(uuid())
-  name      String
-  code      String    @unique
-  users     User[]
-  students  Student[]
-  tutors    Tutor[]
-  sessions  Session[]
-  payments  Payment[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+enum EducationType {
+  HIGH_SCHOOL
+  COLLEGE
+  OTHER_CERTIFICATION
+}
+
+enum ExperienceType {
+  TEACHING
+  WORK
+}
+
+enum Weekday {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum PackagePlan {
+  GROW
+  THRIVE
+  EXCEL
+}
+
+enum ReportType {
+  MASTERY
+  PREREQUISITE
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String
-  fullName     String
-  role         UserRole @default(ADMIN)
-  branchId     String?
-  branch       Branch?  @relation(fields: [branchId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@index([branchId])
+  id                String            @id @default(uuid())
+  email             String            @unique
+  passwordHash      String
+  firstName         String
+  lastName          String
+  role              UserRole?
+  country           String?
+  state             String?
+  phone             String?
+  profilePictureUrl String?
+  setupStep         Int               @default(1)
+  setupCompleted    Boolean           @default(false)
+  tutorApplication  TutorApplication?
+  children          ParentChild[]     @relation("ParentChildren")
+  assessmentReports AssessmentReport[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 }
 
-model Student {
-  id          String        @id @default(uuid())
-  fullName    String
-  grade       String
-  parentName  String
-  parentPhone String
-  subjects    String[]
-  monthlyFee  Decimal       @db.Decimal(10, 2)
-  status      StudentStatus @default(active)
-  isArchived  Boolean       @default(false)
-  branchId    String?
-  branch      Branch?       @relation(fields: [branchId], references: [id])
-  sessions    Session[]
-  payments    Payment[]
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+model ParentChild {
+  id                String            @id @default(uuid())
+  parentId          String
+  parent            User              @relation("ParentChildren", fields: [parentId], references: [id])
+  firstName         String
+  lastName          String
+  dateOfBirth       DateTime?
+  grade             String?
+  country           String?
+  state             String?
+  schoolInUsa       Boolean?
+  packagePlan       PackagePlan?
+  profilePictureUrl String?
+  notes             String?
+  timeSlots         ChildTimeSlot[]
+  syllabusEntries   AcademicSyllabus[]
+  roadmapEntries    AcademicRoadmap[]
+  reports           AssessmentReport[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 
-  @@index([branchId])
-  @@index([status])
+  @@index([parentId])
 }
 
-model Tutor {
-  id               String    @id @default(uuid())
-  fullName         String
-  primarySubject   String
-  secondarySubjects String[]
-  branchId         String?
-  branch           Branch?   @relation(fields: [branchId], references: [id])
-  sessions         Session[]
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-
-  @@index([branchId])
-}
-
-model Session {
+model ChildTimeSlot {
   id        String   @id @default(uuid())
-  studentId String
-  student   Student  @relation(fields: [studentId], references: [id])
-  tutorId   String?
-  tutor     Tutor?   @relation(fields: [tutorId], references: [id])
-  subject   String
-  date      DateTime
-  attended  Boolean  @default(false)
-  branchId  String?
-  branch    Branch?  @relation(fields: [branchId], references: [id])
+  childId   String
+  child     ParentChild @relation(fields: [childId], references: [id])
+  day       Weekday
+  startTime String
+  endTime   String
+  timezone  String   @default("Local")
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  @@index([studentId])
-  @@index([tutorId])
-  @@index([date])
-  @@index([branchId])
+  @@index([childId])
 }
 
-model Payment {
-  id        String        @id @default(uuid())
-  studentId String
-  student   Student       @relation(fields: [studentId], references: [id])
-  month     String
-  amount    Decimal       @db.Decimal(10, 2)
-  status    PaymentStatus @default(unpaid)
-  paidAt    DateTime?
-  branchId  String?
-  branch    Branch?       @relation(fields: [branchId], references: [id])
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+model TutorApplication {
+  id                 String                 @id @default(uuid())
+  userId             String                 @unique
+  user               User                   @relation(fields: [userId], references: [id])
+  status             TutorApplicationStatus @default(DRAFT)
+  currentStep        Int                    @default(1)
+  submittedAt        DateTime?
+  languageSkills     LanguageSkill[]
+  educationEntries   EducationEntry[]
+  experienceEntries  ExperienceEntry[]
+  availabilitySlots  TutorAvailability[]
+  languageDemoVideos LanguageDemoVideo[]
+  createdAt          DateTime               @default(now())
+  updatedAt          DateTime               @updatedAt
+}
 
-  @@index([studentId])
-  @@index([month])
-  @@index([status])
-  @@index([branchId])
+model LanguageSkill {
+  id            String           @id @default(uuid())
+  applicationId String
+  application   TutorApplication @relation(fields: [applicationId], references: [id])
+  language      String
+  proficiency   ProficiencyLevel
+  demoVideo     LanguageDemoVideo?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@unique([applicationId, language])
+  @@index([applicationId])
+}
+
+model EducationEntry {
+  id              String           @id @default(uuid())
+  applicationId   String
+  application     TutorApplication @relation(fields: [applicationId], references: [id])
+  type            EducationType
+  institutionName String
+  studyArea       String?
+  startDate       DateTime?
+  endDate         DateTime?
+  completedYear   Int?
+  graduated       Boolean          @default(false)
+  transcriptUrl   String?
+  certificateUrl  String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([applicationId])
+}
+
+model ExperienceEntry {
+  id               String           @id @default(uuid())
+  applicationId    String
+  application      TutorApplication @relation(fields: [applicationId], references: [id])
+  type             ExperienceType
+  organizationName String
+  title            String
+  description      String?
+  startDate        DateTime?
+  endDate          DateTime?
+  currentlyWorking Boolean          @default(false)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@index([applicationId])
+}
+
+model TutorAvailability {
+  id            String           @id @default(uuid())
+  applicationId String
+  application   TutorApplication @relation(fields: [applicationId], references: [id])
+  day           Weekday
+  startTime     String
+  endTime       String
+  timezone      String           @default("Local")
+  totalHours    Decimal?         @db.Decimal(4, 2)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([applicationId])
+}
+
+model LanguageDemoVideo {
+  id              String           @id @default(uuid())
+  applicationId   String
+  application     TutorApplication @relation(fields: [applicationId], references: [id])
+  languageSkillId String           @unique
+  languageSkill   LanguageSkill    @relation(fields: [languageSkillId], references: [id])
+  url             String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([applicationId])
+}
+
+model AcademicSyllabus {
+  id        String      @id @default(uuid())
+  childId   String
+  child     ParentChild @relation(fields: [childId], references: [id])
+  subject   String
+  country   String?
+  state     String?
+  grade     String?
+  content   Json
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([childId])
+}
+
+model AcademicRoadmap {
+  id        String      @id @default(uuid())
+  childId   String
+  child     ParentChild @relation(fields: [childId], references: [id])
+  subject   String
+  country   String?
+  state     String?
+  grade     String?
+  content   Json
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([childId])
+}
+
+model AssessmentReport {
+  id          String      @id @default(uuid())
+  parentId    String
+  parent      User        @relation(fields: [parentId], references: [id])
+  childId     String
+  child       ParentChild @relation(fields: [childId], references: [id])
+  type        ReportType
+  subject     String
+  title       String
+  summary     String
+  score       Int?
+  publishedAt DateTime    @default(now())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([parentId])
+  @@index([childId])
 }

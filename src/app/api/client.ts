@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api'
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim()
+const API_BASE_URL = configuredApiBaseUrl && configuredApiBaseUrl.length > 0 ? configuredApiBaseUrl : '/api'
 
 type RequestOptions = {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
@@ -6,28 +7,53 @@ type RequestOptions = {
   body?: unknown
 }
 
+export class ApiRequestError extends Error {
+  status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.name = 'ApiRequestError'
+    this.status = status
+  }
+}
+
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const { method = 'GET', token, body } = options
 
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  })
+  let response: Response
+
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    })
+  } catch {
+    throw new Error(
+      'Unable to reach the API. Check that the backend is running and VITE_API_BASE_URL is configured correctly.'
+    )
+  }
 
   if (!response.ok) {
-    let message = 'Request failed'
+    let message = `Request failed (${response.status})`
+
+    const rawBody = await response.text()
+
     try {
-      const errorBody = (await response.json()) as { message?: string }
+      const errorBody = JSON.parse(rawBody) as { message?: string; error?: string }
       message = errorBody.message ?? message
     } catch {
-      message = response.statusText || message
+      if (rawBody) {
+        message = rawBody.slice(0, 200)
+      } else {
+        message = response.statusText || message
+      }
     }
 
-    throw new Error(message)
+    throw new ApiRequestError(message, response.status)
   }
 
   if (response.status === 204) {
