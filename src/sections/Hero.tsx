@@ -53,16 +53,18 @@ export default function Hero() {
 
           {/* Right Column: Illustration */}
           <motion.div
-            className="relative rounded-3xl p-6 backdrop-blur-sm overflow-hidden max-w-[500px] mx-auto bg-gradient-to-br from-text via-sidebar to-primary-dark"
+            className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-4 shadow-[0_20px_60px_rgba(13,27,46,0.14)] dark:border-gray-700 dark:bg-gray-900 max-w-[520px] mx-auto animate-float-soft"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
+            <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-accent/20 blur-2xl" />
+            <div className="absolute -bottom-10 -left-10 h-28 w-28 rounded-full bg-primary/20 blur-2xl" />
             <img 
               src="/illu.png" 
               alt="Students learning online" 
-              className="w-full h-auto"
+              className="relative w-full h-auto rounded-2xl"
             />
           </motion.div>
         </div>

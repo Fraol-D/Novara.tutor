@@ -19,7 +19,10 @@ export default function ProtectedRoute({ requiredRole }: Props) {
   }
 
   if (requiredRole && role !== requiredRole) {
-    const dest = role === 'tutor' ? '/app/tutor' : '/app/parent'
+    const dest = role === 'tutor' ? '/app/tutor' : role === 'parent' ? '/app/parent' : '/setup'
+    if (dest === location.pathname) {
+      return <Navigate to="/setup" replace />
+    }
     return <Navigate to={dest} replace />
   }
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Logo from './Logo'
 
@@ -12,7 +13,12 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-100 dark:border-gray-800 transition-colors">
+    <motion.header
+      initial={{ y: -16, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+      className="sticky top-0 z-50 bg-white/85 dark:bg-gray-900/85 backdrop-blur border-b border-gray-100 dark:border-gray-800 transition-colors"
+    >
       <nav className="container flex items-center justify-between py-3">
         <Link to="/" className="flex items-center gap-2" aria-label="NovaraTutor home">
           <Logo className="h-10 w-10" />
@@ -38,23 +44,31 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
-      {open && (
-        <div className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
-          <div className="container py-3 flex flex-col gap-2">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark"
-              >
-                {item.label}
-              </a>
-            ))}
-            <Link to="/login" onClick={() => setOpen(false)} className="mt-2 w-max btn-primary">Sign In</Link>
-          </div>
-        </div>
-      )}
-    </header>
+      <AnimatePresence>
+        {open ? (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900"
+          >
+            <div className="container py-3 flex flex-col gap-2">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark"
+                >
+                  {item.label}
+                </a>
+              ))}
+              <Link to="/login" onClick={() => setOpen(false)} className="mt-2 w-max btn-primary">Sign In</Link>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </motion.header>
   )
 }

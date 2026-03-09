@@ -1,14 +1,23 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { parentApi } from '../api/parent'
 import type { ParentDashboard } from '../types'
 import { useAuth } from '../state/AuthContext'
+import { ApiRequestError } from '../api/client'
+import { authApi } from '../api/auth'
 
 export default function ParentDashboardPage() {
-  const { token } = useAuth()
+  const navigate = useNavigate()
+  const { token, patchUser, clearSession } = useAuth()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [data, setData] = useState<ParentDashboard | null>(null)
+
+  const toFrontendRole = (backendRole: 'PARENT' | 'TUTOR' | null): 'parent' | 'tutor' | null => {
+    if (backendRole === 'PARENT') return 'parent'
+    if (backendRole === 'TUTOR') return 'tutor'
+    return null
+  }
 
   useEffect(() => {
     if (!token) return
@@ -16,9 +25,42 @@ export default function ParentDashboardPage() {
     parentApi
       .dashboard(token)
       .then(setData)
-      .catch((requestError) => setError(requestError instanceof Error ? requestError.message : 'Could not load dashboard'))
+      .catch(async (requestError) => {
+        if (requestError instanceof ApiRequestError && requestError.status === 403) {
+          try {
+            const profile = await authApi.me(token)
+            const role = toFrontendRole(profile.role)
+
+            patchUser({
+              role,
+              setupCompleted: profile.setupCompleted,
+              setupStep: profile.setupStep,
+              country: profile.country,
+              state: profile.state,
+              phone: profile.phone,
+              profilePictureUrl: profile.profilePictureUrl,
+            })
+
+            if (!profile.setupCompleted) {
+              navigate('/setup', { replace: true })
+              return
+            }
+
+            navigate(role === 'tutor' ? '/app/tutor/onboarding' : '/app/parent', { replace: true })
+            return
+          } catch (profileError) {
+            if (profileError instanceof ApiRequestError && profileError.status === 401) {
+              clearSession()
+              navigate('/login', { replace: true })
+              return
+            }
+          }
+        }
+
+        setError(requestError instanceof Error ? requestError.message : 'Could not load dashboard')
+      })
       .finally(() => setLoading(false))
-  }, [token])
+  }, [token, patchUser, clearSession, navigate])
 
   return (
     <div className="space-y-6 animate-fade-in">

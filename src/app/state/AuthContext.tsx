@@ -21,6 +21,38 @@ type AuthContextValue = {
 const TOKEN_KEY = 'tutorflow_access_token'
 const USER_KEY = 'tutorflow_auth_user'
 
+const normalizeRole = (role: unknown): UserRole | null => {
+  if (role === 'parent' || role === 'PARENT') return 'parent'
+  if (role === 'tutor' || role === 'TUTOR') return 'tutor'
+  return null
+}
+
+const normalizeStoredUser = (raw: unknown): AuthUser | null => {
+  if (!raw || typeof raw !== 'object') {
+    return null
+  }
+
+  const user = raw as Partial<AuthUser> & { role?: unknown }
+  if (!user.id || !user.email || !user.firstName || !user.lastName || !user.fullName) {
+    return null
+  }
+
+  return {
+    id: user.id,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    fullName: user.fullName,
+    role: normalizeRole(user.role),
+    setupCompleted: Boolean(user.setupCompleted),
+    setupStep: typeof user.setupStep === 'number' && user.setupStep > 0 ? user.setupStep : 1,
+    country: user.country ?? null,
+    state: user.state ?? null,
+    phone: user.phone ?? null,
+    profilePictureUrl: user.profilePictureUrl ?? null,
+  }
+}
+
 const parseStoredToken = () => {
   const raw = localStorage.getItem(TOKEN_KEY)
   if (!raw) return null
@@ -43,7 +75,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     if (!raw) return null
 
     try {
-      return JSON.parse(raw) as AuthUser
+      return normalizeStoredUser(JSON.parse(raw))
     } catch {
       return null
     }

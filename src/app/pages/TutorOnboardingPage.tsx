@@ -66,6 +66,15 @@ const emptyAvailability: AvailabilityFormRow = {
   timezone: 'Local',
 }
 
+const onboardingSteps = [
+  { id: 1, title: 'Language Skills', requirement: 'Add at least one language with proficiency.' },
+  { id: 2, title: 'Academic History', requirement: 'Add at least one school/college record.' },
+  { id: 3, title: 'Experience', requirement: 'Add at least one teaching or work experience.' },
+  { id: 4, title: 'Availability', requirement: 'Add at least one weekly availability slot.' },
+  { id: 5, title: 'Demo Videos', requirement: 'Add one video link for each language.' },
+  { id: 6, title: 'Review & Submit', requirement: 'Confirm details and submit your application.' },
+] as const
+
 export default function TutorOnboardingPage() {
   const { token, user } = useAuth()
 
@@ -83,6 +92,67 @@ export default function TutorOnboardingPage() {
   const [experience, setExperience] = useState<ExperienceFormRow[]>([emptyExperience])
   const [availability, setAvailability] = useState<AvailabilityFormRow[]>([emptyAvailability])
   const [videos, setVideos] = useState<Record<string, string>>({})
+
+  const normalizedLanguages = useMemo(
+    () =>
+      languages
+        .map((entry) => ({ language: entry.language.trim(), proficiency: entry.proficiency }))
+        .filter((entry) => entry.language.length > 0),
+    [languages]
+  )
+  const hasLanguageEntries = normalizedLanguages.length > 0
+  const hasEducationEntries = useMemo(
+    () => education.some((entry) => entry.institutionName.trim().length > 0),
+    [education]
+  )
+  const hasExperienceEntries = useMemo(
+    () =>
+      experience.some(
+        (entry) => entry.organizationName.trim().length > 0 && entry.title.trim().length > 0
+      ),
+    [experience]
+  )
+  const hasAvailabilityEntries = useMemo(
+    () => availability.some((entry) => entry.startTime.length > 0 && entry.endTime.length > 0),
+    [availability]
+  )
+  const hasDemoVideosForAllLanguages = useMemo(
+    () =>
+      hasLanguageEntries &&
+      normalizedLanguages.every((entry) => (videos[entry.language] ?? '').trim().length > 0),
+    [hasLanguageEntries, normalizedLanguages, videos]
+  )
+
+  const maxUnlockedStep = useMemo(() => {
+    if (application?.status === 'SUBMITTED') {
+      return 6
+    }
+
+    if (!hasLanguageEntries) {
+      return 1
+    }
+    if (!hasEducationEntries) {
+      return 2
+    }
+    if (!hasExperienceEntries) {
+      return 3
+    }
+    if (!hasAvailabilityEntries) {
+      return 4
+    }
+    if (!hasDemoVideosForAllLanguages) {
+      return 5
+    }
+
+    return 6
+  }, [
+    application?.status,
+    hasLanguageEntries,
+    hasEducationEntries,
+    hasExperienceEntries,
+    hasAvailabilityEntries,
+    hasDemoVideosForAllLanguages,
+  ])
 
   useEffect(() => {
     if (!token) {
@@ -170,12 +240,31 @@ export default function TutorOnboardingPage() {
 
   const submitLanguages = async () => {
     if (!token) return
-    const normalized = languages
-      .map((entry) => ({ language: entry.language.trim(), proficiency: entry.proficiency }))
-      .filter((entry) => entry.language.length > 0)
+
+    if (normalizedLanguages.length === 0) {
+      setError('Add at least one language and proficiency before continuing.')
+      setSuccess(null)
+      return
+    }
+
+    const seenLanguages = new Set<string>()
+    const hasDuplicateLanguage = normalizedLanguages.some((entry) => {
+      const key = entry.language.toLowerCase()
+      if (seenLanguages.has(key)) {
+        return true
+      }
+      seenLanguages.add(key)
+      return false
+    })
+
+    if (hasDuplicateLanguage) {
+      setError('Each language should only be listed once.')
+      setSuccess(null)
+      return
+    }
 
     await withSave(
-      () => tutorOnboardingApi.saveLanguages(token, normalized),
+      () => tutorOnboardingApi.saveLanguages(token, normalizedLanguages),
       2,
       'Language skills saved'
     )
@@ -195,6 +284,12 @@ export default function TutorOnboardingPage() {
         transcriptUrl: entry.transcriptUrl || undefined,
         certificateUrl: entry.certificateUrl || undefined,
       }))
+
+    if (normalized.length === 0) {
+      setError('Add at least one academic history entry before continuing.')
+      setSuccess(null)
+      return
+    }
 
     await withSave(
       () => tutorOnboardingApi.saveEducation(token, normalized),
@@ -216,6 +311,12 @@ export default function TutorOnboardingPage() {
         endDate: entry.endDate || undefined,
       }))
 
+    if (normalized.length === 0) {
+      setError('Add at least one teaching or work experience entry before continuing.')
+      setSuccess(null)
+      return
+    }
+
     await withSave(
       () => tutorOnboardingApi.saveExperience(token, normalized),
       4,
@@ -232,6 +333,12 @@ export default function TutorOnboardingPage() {
         totalHours: 1,
       }))
 
+    if (normalized.length === 0) {
+      setError('Add at least one availability slot before continuing.')
+      setSuccess(null)
+      return
+    }
+
     await withSave(
       () => tutorOnboardingApi.saveAvailability(token, normalized),
       5,
@@ -241,15 +348,43 @@ export default function TutorOnboardingPage() {
 
   const submitVideos = async () => {
     if (!token) return
-    const normalized = Object.entries(videos)
-      .map(([language, url]) => ({ language, url: url.trim() }))
-      .filter((entry) => entry.url.length > 0)
+
+    const normalized = normalizedLanguages.map((entry) => ({
+      language: entry.language,
+      url: (videos[entry.language] ?? '').trim(),
+    }))
+
+    const missingLanguages = normalized.filter((entry) => entry.url.length === 0).map((entry) => entry.language)
+    if (missingLanguages.length > 0) {
+      setError(`Add demo video links for: ${missingLanguages.join(', ')}`)
+      setSuccess(null)
+      return
+    }
+
+    const invalidUrl = normalized.find((entry) => !/^https?:\/\//i.test(entry.url))
+    if (invalidUrl) {
+      setError(`Use a valid URL for ${invalidUrl.language} (must start with http:// or https://).`)
+      setSuccess(null)
+      return
+    }
 
     await withSave(
       () => tutorOnboardingApi.saveVideos(token, normalized),
       6,
       'Language demo video links saved'
     )
+  }
+
+  const handleStepNavigation = (targetStep: number) => {
+    if (targetStep > maxUnlockedStep) {
+      setError('Complete the required questions in earlier steps to unlock this section.')
+      setSuccess(null)
+      return
+    }
+
+    setError(null)
+    setSuccess(null)
+    setStep(targetStep)
   }
 
   const submitApplication = async () => {
@@ -286,11 +421,54 @@ export default function TutorOnboardingPage() {
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
           Complete each step in order: language skills, academics, experience, availability, demo videos, and final review.
         </p>
+
+        <div className="mt-5 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/60">
+          <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">Progress Tracker</p>
+          <div className="mt-3 overflow-x-auto pb-1">
+            <div className="flex min-w-[760px] items-start gap-2">
+              {onboardingSteps.map((item, index) => {
+                const isActive = step === item.id
+                const isCompleted = item.id < step
+                const isLocked = item.id > maxUnlockedStep
+
+                return (
+                  <div key={item.id} className="flex flex-1 items-center gap-2">
+                    <button
+                      type="button"
+                      className={`flex h-12 w-12 items-center justify-center rounded-full border text-sm font-bold transition ${
+                        isCompleted
+                          ? 'border-emerald-500 bg-emerald-500 text-white'
+                          : isActive
+                            ? 'border-accent bg-orange-50 text-accent dark:bg-orange-900/20'
+                            : isLocked
+                              ? 'border-gray-300 bg-white text-gray-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-500'
+                              : 'border-accent/60 bg-white text-accent hover:border-accent dark:border-accent/50 dark:bg-gray-900'
+                      }`}
+                      onClick={() => handleStepNavigation(item.id)}
+                      disabled={isLocked}
+                      aria-label={`Go to step ${item.id}: ${item.title}`}
+                    >
+                      {String(item.id).padStart(2, '0')}
+                    </button>
+                    <div className="min-w-0">
+                      <p className={`text-xs font-semibold ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : isActive ? 'text-accent' : 'text-gray-700 dark:text-gray-200'}`}>
+                        {item.title}
+                      </p>
+                      <p className="text-[11px] text-gray-500 dark:text-gray-400">{item.requirement}</p>
+                    </div>
+                    {index < onboardingSteps.length - 1 ? <div className="h-px flex-1 bg-gray-300 dark:bg-gray-600" /> : null}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
       </div>
 
       {step === 1 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Language Skills</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Required: Add at least one language and select proficiency.</p>
           {languages.map((entry, index) => (
             <div key={`${entry.language}-${index}`} className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <input
@@ -338,6 +516,7 @@ export default function TutorOnboardingPage() {
       {step === 2 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Academic History</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Required: Add at least one school/college/certification entry.</p>
           {education.map((entry, index) => (
             <div key={`education-${index}`} className="rounded-lg border border-gray-200 p-4 space-y-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -458,6 +637,7 @@ export default function TutorOnboardingPage() {
       {step === 3 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Teaching and Work Experience</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Required: Add at least one experience entry with organization and title.</p>
           {experience.map((entry, index) => (
             <div key={`experience-${index}`} className="rounded-lg border border-gray-200 p-4 space-y-3">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -530,6 +710,7 @@ export default function TutorOnboardingPage() {
       {step === 4 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Availability</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Required: Add at least one weekly day/time slot.</p>
           {availability.map((entry, index) => (
             <div key={`availability-${index}`} className="grid grid-cols-1 md:grid-cols-4 gap-3">
               <select
@@ -603,6 +784,7 @@ export default function TutorOnboardingPage() {
       {step === 5 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Language Demonstration Video</h2>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Required: One valid video URL per language (YouTube, Drive, or similar).</p>
           <div className="rounded-lg bg-primary/10 border border-primary/20 p-4 text-sm">
             <p>
               Record a short video under 10 minutes for each language you added. Upload to YouTube or Google Drive and

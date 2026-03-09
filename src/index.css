@@ -28,11 +28,13 @@ body {
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-primary hover:bg-accent dark:bg-primary-dark dark:hover:bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50;
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-lg bg-primary hover:bg-accent dark:bg-primary-dark dark:hover:bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:shadow-lg transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50;
+    transform: translateZ(0);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border border-primary/30 bg-white/80 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-800 px-5 py-2.5 text-sm font-medium text-text dark:text-text-dark transition-all;
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-primary/30 bg-white/80 hover:bg-white dark:bg-gray-900 dark:hover:bg-gray-800 px-5 py-2.5 text-sm font-medium text-text dark:text-text-dark transition-all duration-300;
+    transform: translateZ(0);
   }
 
   .surface-card {
@@ -69,6 +71,34 @@ body {
   }
 }
 
+.btn-primary::before,
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent 0%, rgba(229, 155, 37, 0.32) 50%, transparent 100%);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.btn-primary:hover::before,
+.btn-secondary:hover::before {
+  left: 120%;
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+  transform: translateY(0) scale(0.99);
+}
+
 /* Fade-in animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
@@ -77,5 +107,15 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 0.25s ease-out both;
+}
+
+@keyframes floatSoft {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float-soft {
+  animation: floatSoft 6s ease-in-out infinite;
 }
 
