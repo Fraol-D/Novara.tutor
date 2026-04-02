@@ -89,20 +89,7 @@ export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
 
   return (
     <div className="manuscript-surface min-h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-5xl grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <aside className="surface-card hidden lg:block !p-10">
-          <p className="eyebrow">Tutor Portal</p>
-          <h2 className="mt-6 text-5xl font-semibold leading-[1.05]">A calmer interface for serious learning outcomes.</h2>
-          <p className="mt-6 max-w-md text-base leading-relaxed text-[color:var(--on-surface-soft)]">
-            Structured onboarding, weekly progress intelligence, and parent-tutor collaboration in one architectural workspace.
-          </p>
-          <div className="mt-10 space-y-3 text-sm text-[color:var(--on-surface-soft)]">
-            <p>• Intentional workflow for parents and tutors</p>
-            <p>• Surface-layered UI that reduces visual noise</p>
-            <p>• Role-aware dashboards from the first login</p>
-          </div>
-        </aside>
-
+      <div className="w-full max-w-md">
         <div className="glass-card p-8 md:p-10">
           <div className="mb-6 text-center">
             <span className="eyebrow">Novara Tutor Studio</span>

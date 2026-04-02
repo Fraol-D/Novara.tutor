@@ -7,7 +7,7 @@ export default function Hero() {
   const [burst, setBurst] = useState({ x: -999, y: -999, radius: 100, active: false, tick: 0 })
 
   const headline = 'Free 20-Minute Academic Diagnostic (No obligation)'
-  const chars = useMemo(() => headline.split(''), [headline])
+  const words = useMemo(() => headline.split(' '), [headline])
   const stars = useMemo(
     () =>
       Array.from({ length: 39 }, (_, index) => ({
@@ -95,13 +95,21 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="eyebrow">Novara Tutor Studio</p>
-            <h1 className="mt-6 max-w-2xl text-4xl font-semibold leading-[0.98] sm:text-5xl lg:text-[3.5rem]">
+            <h1 className="mt-2 max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
               <span className="h1-drop">
-                {chars.map((char, index) => (
-                  <span key={`${char}-${index}`} style={{ ['--i' as string]: index }}>
-                    {char === ' ' ? '\u00A0' : char}
-                  </span>
-                ))}
+                {words.map((word, wordIndex) => {
+                  const charOffset = words.slice(0, wordIndex).join('').length + wordIndex
+
+                  return (
+                    <span key={`${word}-${wordIndex}`} className="inline-flex whitespace-nowrap mr-[0.28em]">
+                      {word.split('').map((char, charIndex) => (
+                        <span key={`${char}-${wordIndex}-${charIndex}`} style={{ ['--i' as string]: charOffset + charIndex }}>
+                          {char}
+                        </span>
+                      ))}
+                    </span>
+                  )
+                })}
               </span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-[color:var(--on-surface-soft)]">
@@ -110,7 +118,7 @@ export default function Hero() {
             <p className="mt-4 text-xs font-medium uppercase tracking-[0.16em] text-[color:var(--on-surface-soft)]">
               Online • Middle & High School • Zoom
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-7 flex flex-wrap items-center gap-4">
               <a href="#booking" className="btn-primary !px-8 !py-4 !text-base">
                 Book Free Diagnostic <span className="ml-2">→</span>
               </a>
