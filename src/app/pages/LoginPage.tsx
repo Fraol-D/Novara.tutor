@@ -88,33 +88,44 @@ export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-primary/5 dark:from-background-dark dark:to-gray-900 flex items-center justify-center p-6">
-      <div className="w-full max-w-md">
-        <div className="glass-card p-8">
-          {/* Logo + brand */}
+    <div className="manuscript-surface min-h-screen flex items-center justify-center p-6">
+      <div className="w-full max-w-5xl grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+        <aside className="surface-card hidden lg:block !p-10">
+          <p className="eyebrow">Tutor Portal</p>
+          <h2 className="mt-6 text-5xl font-semibold leading-[1.05]">A calmer interface for serious learning outcomes.</h2>
+          <p className="mt-6 max-w-md text-base leading-relaxed text-[color:var(--on-surface-soft)]">
+            Structured onboarding, weekly progress intelligence, and parent-tutor collaboration in one architectural workspace.
+          </p>
+          <div className="mt-10 space-y-3 text-sm text-[color:var(--on-surface-soft)]">
+            <p>• Intentional workflow for parents and tutors</p>
+            <p>• Surface-layered UI that reduces visual noise</p>
+            <p>• Role-aware dashboards from the first login</p>
+          </div>
+        </aside>
+
+        <div className="glass-card p-8 md:p-10">
           <div className="mb-6 text-center">
-            <span className="inline-block rounded-xl bg-primary/10 px-3 py-1 text-sm font-medium text-primary">TutorFlow</span>
-            <h1 className="mt-3 text-2xl font-semibold">
+            <span className="eyebrow">Novara Tutor Studio</span>
+            <h1 className="mt-4 text-3xl font-semibold">
               {mode === 'login' ? 'Welcome back' : 'Create your account'}
             </h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-2 text-sm text-[color:var(--on-surface-soft)]">
               {mode === 'login' ? 'Sign in to continue to your dashboard.' : 'Join TutorFlow to get started.'}
             </p>
           </div>
 
-          {/* Mode tabs */}
-          <div className="mb-6 flex rounded-lg bg-gray-100 dark:bg-gray-800 p-1">
+          <div className="mb-6 flex rounded-2xl p-1.5 surface-tier-low">
             <button
               type="button"
               onClick={() => { setMode('login'); setError(null) }}
-              className={`flex-1 rounded-md py-2 text-sm font-medium transition-all ${mode === 'login' ? 'bg-white dark:bg-gray-700 shadow-sm text-text dark:text-text-dark' : 'text-gray-500 hover:text-text dark:hover:text-text-dark'}`}
+              className={`flex-1 rounded-xl py-2.5 text-sm font-medium transition-all ${mode === 'login' ? 'surface-tier-lowest shadow-sm' : 'text-[color:var(--on-surface-soft)]'}`}
             >
               Login
             </button>
             <button
               type="button"
               onClick={() => { setMode('register'); setError(null) }}
-              className={`flex-1 rounded-md py-2 text-sm font-medium transition-all ${mode === 'register' ? 'bg-white dark:bg-gray-700 shadow-sm text-text dark:text-text-dark' : 'text-gray-500 hover:text-text dark:hover:text-text-dark'}`}
+              className={`flex-1 rounded-xl py-2.5 text-sm font-medium transition-all ${mode === 'register' ? 'surface-tier-lowest shadow-sm' : 'text-[color:var(--on-surface-soft)]'}`}
             >
               Register
             </button>
@@ -125,7 +136,7 @@ export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">First Name</label>
+                    <label className="mb-1 block text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--on-surface-soft)]">First Name</label>
                     <input
                       required
                       type="text"
@@ -136,7 +147,7 @@ export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Last Name</label>
+                    <label className="mb-1 block text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--on-surface-soft)]">Last Name</label>
                     <input
                       required
                       type="text"
@@ -151,7 +162,7 @@ export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
             )}
 
             <div>
-              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Email</label>
+              <label className="mb-1 block text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--on-surface-soft)]">Email</label>
               <input
                 required
                 type="email"
@@ -163,7 +174,7 @@ export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Password</label>
+              <label className="mb-1 block text-xs font-medium uppercase tracking-[0.12em] text-[color:var(--on-surface-soft)]">Password</label>
               <input
                 required
                 type="password"
@@ -180,8 +191,8 @@ export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
           </form>
 
           {error ? (
-            <div className="mt-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3">
-              <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            <div className="mt-4 rounded-2xl px-4 py-3" style={{ background: 'color-mix(in srgb, #f44d4d 10%, var(--surface-lowest))' }}>
+              <p className="text-sm" style={{ color: '#c73636' }}>{error}</p>
             </div>
           ) : null}
         </div>

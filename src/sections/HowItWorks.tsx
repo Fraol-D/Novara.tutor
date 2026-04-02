@@ -21,19 +21,20 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-16 sm:py-20 bg-white dark:bg-gray-900 transition-colors">
+    <section id="how-it-works" className="section-manuscript">
       <div className="container">
         <motion.div
-          className="text-center max-w-3xl mx-auto mb-12"
+          className="mx-auto mb-12 max-w-3xl text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-semibold text-text dark:text-text-dark">
+          <p className="eyebrow mb-4">Method</p>
+          <h2 className="text-3xl sm:text-4xl font-semibold">
             How It Works
           </h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-lg text-[color:var(--on-surface-soft)]">
             Clear next steps from diagnostic to tutoring — no subscription required.
           </p>
         </motion.div>
@@ -44,37 +45,33 @@ export default function HowItWorks() {
             return (
               <motion.div
                 key={step.title}
-                className="relative"
+                className="relative surface-card"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="flex flex-col items-center text-center">
-                  {/* Icon Container */}
+                <div className="flex flex-col items-start text-left">
                   <div className="relative mb-6">
-                    <div className="w-20 h-20 rounded-full bg-primary/10 dark:bg-primary-dark/20 flex items-center justify-center">
-                      <Icon className="w-10 h-10 text-primary dark:text-primary-dark" />
+                    <div className="w-16 h-16 rounded-2xl surface-tier-high flex items-center justify-center">
+                      <Icon className="w-8 h-8 text-[color:var(--primary)]" />
                     </div>
-                    {/* Step Number Badge */}
-                    <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-accent text-white text-sm font-bold flex items-center justify-center shadow-md">
+                    <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[color:var(--primary)] text-white text-sm font-bold flex items-center justify-center">
                       {index + 1}
                     </div>
                   </div>
 
-                  {/* Content */}
-                  <h3 className="text-xl font-semibold text-text dark:text-text-dark mb-3">
+                  <h3 className="mb-3 text-xl font-semibold">
                     {step.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p className="leading-relaxed text-[color:var(--on-surface-soft)]">
                     {step.description}
                   </p>
                 </div>
 
-                {/* Connector Arrow (not on last item) */}
                 {index < steps.length - 1 && (
                   <div className="hidden md:block absolute top-10 left-[calc(100%+1rem)] w-8">
-                    <svg className="w-full h-6 text-primary/30 dark:text-primary-dark/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-full h-6 text-[color:var(--outline)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </div>

@@ -5,11 +5,11 @@ export default function ThemeToggleFab() {
   const { theme, preference, toggleTheme, setPreference } = useTheme()
 
   return (
-    <div className="fixed bottom-4 right-4 z-[70] flex items-center gap-2 rounded-full border border-gray-200 bg-white/90 px-2 py-1 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-900/90">
+    <div className="fixed bottom-5 right-5 z-[70] glass-card flex items-center gap-1 rounded-full px-2 py-1">
       <button
         type="button"
         onClick={toggleTheme}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-gray-700 transition hover:bg-accent/10 hover:text-accent dark:text-gray-200"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full text-[color:var(--on-surface)] transition hover:bg-[color:var(--surface-low)] hover:text-[color:var(--primary)]"
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
       >
         {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
@@ -19,8 +19,8 @@ export default function ThemeToggleFab() {
         onClick={() => setPreference('system')}
         className={`inline-flex h-9 w-9 items-center justify-center rounded-full transition ${
           preference === 'system'
-            ? 'bg-primary/15 text-primary'
-            : 'text-gray-500 hover:bg-primary/10 hover:text-primary dark:text-gray-400'
+            ? 'bg-[color:var(--surface-low)] text-[color:var(--primary)]'
+            : 'text-[color:var(--on-surface-soft)] hover:bg-[color:var(--surface-low)] hover:text-[color:var(--primary)]'
         }`}
         aria-label="Use system theme"
       >

@@ -10,33 +10,34 @@ const benefits = [
 
 export default function DiagnosticBenefits() {
   return (
-    <section id="diagnostic" className="py-16 sm:py-20 bg-white dark:bg-gray-900 transition-colors">
+    <section id="diagnostic" className="section-manuscript surface-tier-container">
       <div className="container">
         <motion.div
-          className="max-w-3xl mx-auto text-center"
+          className="mx-auto max-w-3xl text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-semibold text-text dark:text-text-dark">What you get in the diagnostic</h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
+          <p className="eyebrow mb-4">Outcomes</p>
+          <h2 className="text-3xl sm:text-4xl font-semibold">What you get in the diagnostic</h2>
+          <p className="mt-4 text-lg text-[color:var(--on-surface-soft)]">
             A concise, actionable assessment you can use immediately.
           </p>
         </motion.div>
 
-        <div className="mt-10 grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2">
           {benefits.map((item, index) => (
             <motion.div
               key={item}
-              className="flex items-start gap-3 rounded-2xl bg-gray-50 dark:bg-gray-800/80 p-4 shadow-sm"
+              className="surface-card !p-5 flex items-start gap-3"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
-              <CheckCircle2 className="h-6 w-6 text-primary dark:text-primary-dark mt-0.5" />
-              <p className="text-base text-text dark:text-text-dark">{item}</p>
+              <CheckCircle2 className="mt-0.5 h-6 w-6 text-[color:var(--primary)]" />
+              <p className="text-base">{item}</p>
             </motion.div>
           ))}
         </div>

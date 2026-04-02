@@ -9,7 +9,7 @@ import Footer from '../components/Footer'
 
 export default function LandingPage() {
   return (
-    <div className="bg-background dark:bg-background-dark text-text dark:text-text-dark font-sans transition-colors duration-300">
+    <div className="manuscript-surface transition-colors duration-300">
       <Navbar />
       <main>
         <Hero />

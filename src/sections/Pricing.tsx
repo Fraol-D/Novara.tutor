@@ -17,35 +17,36 @@ const pricing = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-16 sm:py-20 bg-white dark:bg-gray-900 transition-colors">
+    <section id="pricing" className="section-manuscript">
       <div className="container">
         <motion.div
-          className="max-w-3xl mx-auto text-center"
+          className="mx-auto max-w-3xl text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-semibold text-text dark:text-text-dark">Simple pricing</h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">No subscription required.</p>
+          <p className="eyebrow mb-4">Pricing</p>
+          <h2 className="text-3xl sm:text-4xl font-semibold">Simple pricing</h2>
+          <p className="mt-4 text-lg text-[color:var(--on-surface-soft)]">No subscription required.</p>
         </motion.div>
 
-        <div className="mt-10 grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
           {pricing.map((item, index) => (
             <motion.div
               key={item.title}
-              className="rounded-2xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/80 p-6 shadow-sm"
+              className="surface-card"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
               <div className="flex items-baseline gap-3">
-                <h3 className="text-xl font-semibold text-text dark:text-text-dark">{item.title}</h3>
-                <span className="text-sm text-gray-500 dark:text-gray-400">{item.detail}</span>
+                <h3 className="text-xl font-semibold">{item.title}</h3>
+                <span className="text-sm text-[color:var(--on-surface-soft)]">{item.detail}</span>
               </div>
-              <p className="mt-3 text-3xl font-bold text-primary dark:text-primary-dark">{item.price}</p>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{item.note}</p>
+              <p className="mt-3 text-3xl font-bold text-[color:var(--primary)]">{item.price}</p>
+              <p className="mt-2 text-sm text-[color:var(--on-surface-soft)]">{item.note}</p>
             </motion.div>
           ))}
         </div>
@@ -53,9 +54,9 @@ export default function Pricing() {
         <div className="mt-8 flex justify-center">
           <a
             href="#booking"
-            className="inline-flex items-center rounded-lg bg-primary hover:bg-accent dark:bg-primary-dark dark:hover:bg-accent px-6 py-3 text-base font-semibold text-white shadow-sm hover:shadow-md transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+            className="btn-primary !px-7 !py-3"
           >
-            Book Free Diagnostic
+            Book Free Diagnostic <span className="ml-2">→</span>
           </a>
         </div>
       </div>

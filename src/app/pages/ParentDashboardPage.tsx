@@ -64,33 +64,33 @@ export default function ParentDashboardPage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <section className="surface-card p-6">
+      <section className="surface-card">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold">My Children</h1>
-            <p className="mt-1 text-sm text-gray-500">Manage your children and upcoming sessions.</p>
+            <p className="mt-1 text-sm text-[color:var(--on-surface-soft)]">Manage your children and upcoming sessions.</p>
           </div>
           <Link to="/app/parent/add-child" className="btn-primary">
             + Add Child
           </Link>
         </div>
 
-        {loading ? <p className="mt-4 text-sm text-gray-500">Loading children...</p> : null}
-        {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
+        {loading ? <p className="mt-4 text-sm text-[color:var(--on-surface-soft)]">Loading children...</p> : null}
+        {error ? <p className="mt-4 text-sm text-red-700">{error}</p> : null}
 
         {!loading && !error ? (
           <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
             {(data?.children ?? []).length === 0 ? (
-              <div className="rounded-lg border border-dashed border-gray-300 p-6 text-sm text-gray-500">
+              <div className="surface-tier-low rounded-2xl p-6 text-sm text-[color:var(--on-surface-soft)]">
                 No child added yet.
               </div>
             ) : (
               data?.children.map((child) => (
-                <article key={child.id} className="rounded-xl border border-gray-200 p-4">
+                <article key={child.id} className="surface-tier-lowest rounded-2xl p-4">
                   <h2 className="text-lg font-semibold">{child.firstName} {child.lastName}</h2>
-                  <p className="text-sm text-gray-500 mt-1">Grade: {child.grade ?? 'Not set'}</p>
-                  <p className="text-sm text-gray-500">Package: {child.packagePlan ?? 'Not selected'}</p>
-                  <p className="text-sm text-gray-500">Time slots: {child.timeSlots.length}</p>
+                  <p className="text-sm mt-1 text-[color:var(--on-surface-soft)]">Grade: {child.grade ?? 'Not set'}</p>
+                  <p className="text-sm text-[color:var(--on-surface-soft)]">Package: {child.packagePlan ?? 'Not selected'}</p>
+                  <p className="text-sm text-[color:var(--on-surface-soft)]">Time slots: {child.timeSlots.length}</p>
                 </article>
               ))
             )}
@@ -98,9 +98,9 @@ export default function ParentDashboardPage() {
         ) : null}
       </section>
 
-      <section className="surface-card p-6">
+      <section className="surface-card">
         <h2 className="text-xl font-semibold">Sessions</h2>
-        <div className="mt-4 rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sky-700">
+        <div className="mt-4 rounded-2xl surface-tier-low px-4 py-3 text-[color:var(--on-surface-soft)]">
           No upcoming sessions available yet.
         </div>
       </section>

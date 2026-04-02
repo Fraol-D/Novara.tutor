@@ -83,24 +83,24 @@ export default function StudentsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">Students</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Manage enrolled students and contact details.</p>
+          <p className="text-sm text-[color:var(--on-surface-soft)]">Manage enrolled students and contact details.</p>
         </div>
         <button className="btn-primary" type="button" onClick={openCreateModal}>
           Add Student
         </button>
       </div>
 
-      {loading ? <p className="text-gray-500">Loading students...</p> : null}
-      {error ? <p className="text-accent text-sm">{error}</p> : null}
+      {loading ? <p className="text-[color:var(--on-surface-soft)]">Loading students...</p> : null}
+      {error ? <p className="text-red-700 text-sm">{error}</p> : null}
 
       {!loading && students.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-primary/30 p-8 text-center text-gray-500">
+        <div className="surface-tier-low rounded-2xl p-8 text-center text-[color:var(--on-surface-soft)]">
           No students yet. Start by adding your first student.
         </div>
       ) : (
-        <div className="rounded-xl border border-primary/15 overflow-hidden bg-white dark:bg-gray-900">
+        <div className="table-shell">
           <table className="w-full text-sm">
-            <thead className="bg-primary/5 text-left">
+            <thead className="surface-tier-low text-left">
               <tr>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Grade</th>
@@ -112,14 +112,14 @@ export default function StudentsPage() {
             </thead>
             <tbody>
               {students.map((student) => (
-                <tr key={student.id} className="border-t border-gray-100 dark:border-gray-800">
+                <tr key={student.id} className="border-t border-[color:var(--outline-ghost)]">
                   <td className="px-4 py-3">{student.fullName}</td>
                   <td className="px-4 py-3">{student.grade}</td>
                   <td className="px-4 py-3">{student.parentName}</td>
                   <td className="px-4 py-3">{student.monthlyFee}</td>
                   <td className="px-4 py-3">{student.status}</td>
                   <td className="px-4 py-3">
-                    <button className="text-primary hover:underline" onClick={() => openEditModal(student)}>
+                    <button className="text-[color:var(--primary)] hover:underline" onClick={() => openEditModal(student)}>
                       Edit
                     </button>
                   </td>
@@ -135,35 +135,35 @@ export default function StudentsPage() {
           <form className="space-y-3" onSubmit={handleSubmit}>
             <input
               required
-              className="w-full rounded-lg border border-primary/25 px-3 py-2"
+              className="form-input"
               placeholder="Full name"
               value={form.fullName}
               onChange={(event) => setForm((prev) => ({ ...prev, fullName: event.target.value }))}
             />
             <input
               required
-              className="w-full rounded-lg border border-primary/25 px-3 py-2"
+              className="form-input"
               placeholder="Grade"
               value={form.grade}
               onChange={(event) => setForm((prev) => ({ ...prev, grade: event.target.value }))}
             />
             <input
               required
-              className="w-full rounded-lg border border-primary/25 px-3 py-2"
+              className="form-input"
               placeholder="Parent name"
               value={form.parentName}
               onChange={(event) => setForm((prev) => ({ ...prev, parentName: event.target.value }))}
             />
             <input
               required
-              className="w-full rounded-lg border border-primary/25 px-3 py-2"
+              className="form-input"
               placeholder="Parent phone"
               value={form.parentPhone}
               onChange={(event) => setForm((prev) => ({ ...prev, parentPhone: event.target.value }))}
             />
             <input
               required
-              className="w-full rounded-lg border border-primary/25 px-3 py-2"
+              className="form-input"
               placeholder="Subjects (comma separated)"
               value={form.subjects.join(', ')}
               onChange={(event) =>
@@ -181,13 +181,13 @@ export default function StudentsPage() {
               type="number"
               min="0"
               step="0.01"
-              className="w-full rounded-lg border border-primary/25 px-3 py-2"
+              className="form-input"
               placeholder="Monthly fee"
               value={form.monthlyFee}
               onChange={(event) => setForm((prev) => ({ ...prev, monthlyFee: Number(event.target.value) }))}
             />
             <select
-              className="w-full rounded-lg border border-primary/25 px-3 py-2"
+              className="form-input"
               value={form.status}
               onChange={(event) => setForm((prev) => ({ ...prev, status: event.target.value as 'active' | 'inactive' }))}
             >

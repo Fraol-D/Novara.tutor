@@ -86,9 +86,10 @@ export default function ParentAddChildPage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <section className="surface-card p-6">
+      <section className="surface-card">
+        <p className="eyebrow">Parent Intake</p>
         <h1 className="text-2xl font-bold">Add Child</h1>
-        <p className="mt-1 text-sm text-gray-500">Fill in your child details, package, and preferred learning schedule.</p>
+        <p className="mt-1 text-sm text-[color:var(--on-surface-soft)]">Fill in your child details, package, and preferred learning schedule.</p>
 
         <form onSubmit={submit} className="mt-6 space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -103,7 +104,7 @@ export default function ParentAddChildPage() {
             <input className="form-input" placeholder="State" value={state} onChange={(event) => setState(event.target.value)} />
           </div>
 
-          <div className="rounded-lg border border-gray-200 p-4 space-y-4">
+          <div className="surface-tier-low rounded-2xl p-4 space-y-4">
             <p className="text-sm font-medium">Does the child go to school in the USA?</p>
             <div className="flex gap-4 text-sm">
               <label className="inline-flex items-center gap-2">
@@ -117,7 +118,7 @@ export default function ParentAddChildPage() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-gray-200 p-4">
+          <div className="surface-tier-low rounded-2xl p-4">
             <p className="text-sm font-medium mb-3">Select Package</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {([
@@ -129,7 +130,11 @@ export default function ParentAddChildPage() {
                   key={plan.key}
                   type="button"
                   onClick={() => setPackagePlan(plan.key)}
-                  className={`rounded-lg border p-3 text-sm font-medium text-left ${packagePlan === plan.key ? 'border-primary bg-primary/5' : 'border-gray-200'}`}
+                  className={`rounded-2xl p-3 text-sm font-medium text-left ${
+                    packagePlan === plan.key
+                      ? 'surface-tier-high text-[color:var(--primary)]'
+                      : 'surface-tier-lowest'
+                  }`}
                 >
                   {plan.label}
                 </button>
@@ -137,13 +142,13 @@ export default function ParentAddChildPage() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-gray-200 p-4 space-y-4">
+          <div className="surface-tier-low rounded-2xl p-4 space-y-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-medium">Study Schedule</p>
               <button type="button" className="btn-secondary" onClick={addTimeSlot}>+ Add Time Slot</button>
             </div>
 
-            {timeSlots.length === 0 ? <p className="text-sm text-gray-500">No time slots added yet.</p> : null}
+            {timeSlots.length === 0 ? <p className="text-sm text-[color:var(--on-surface-soft)]">No time slots added yet.</p> : null}
 
             {timeSlots.map((slot, index) => (
               <div key={`${slot.day}-${index}`} className="grid grid-cols-1 md:grid-cols-4 gap-3">
@@ -170,8 +175,8 @@ export default function ParentAddChildPage() {
         </form>
       </section>
 
-      {success ? <p className="text-sm text-green-600">{success}</p> : null}
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {success ? <p className="text-sm text-emerald-700">{success}</p> : null}
+      {error ? <p className="text-sm text-red-700">{error}</p> : null}
     </div>
   )
 }

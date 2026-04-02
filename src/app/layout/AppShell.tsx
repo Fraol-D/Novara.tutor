@@ -29,34 +29,31 @@ export default function AppShell() {
     : '?'
 
   return (
-    <div className="min-h-screen bg-background dark:bg-background-dark text-text dark:text-text-dark flex">
-      {/* Sidebar */}
-      <aside className="w-64 hidden md:flex md:flex-col" style={{ background: 'linear-gradient(180deg, #0d1b2e 0%, #111c2e 100%)' }}>
-        {/* Brand */}
-        <div className="px-5 py-5 border-b border-white/10">
+    <div className="manuscript-surface flex min-h-screen">
+      <aside className="hidden w-72 md:flex md:flex-col surface-tier-container">
+        <div className="px-6 pb-4 pt-7">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-              <span className="text-primary text-sm font-bold">TF</span>
+            <div className="h-9 w-9 rounded-xl bg-[color:var(--surface-highest)] flex items-center justify-center">
+              <span className="text-[color:var(--primary)] text-sm font-bold">NV</span>
             </div>
             <div>
-              <p className="text-white text-sm font-semibold leading-tight">TutorFlow</p>
-              <p className="text-white/50 text-[10px]">{roleLabel}</p>
+              <p className="text-sm font-semibold leading-tight [font-family:var(--font-display)]">Novara Tutor</p>
+              <p className="text-[10px] text-[color:var(--on-surface-soft)] uppercase tracking-[0.12em]">{roleLabel}</p>
             </div>
           </Link>
         </div>
 
-        {/* Nav */}
-        <nav className="p-3 flex-1 space-y-0.5">
+        <nav className="px-4 py-2 flex-1 space-y-1">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               end={item.to === '/app/parent' || item.to === '/app/tutor/onboarding'}
               className={({ isActive }) =>
-                `flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm transition-all ${
+                `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm transition-all ${
                   isActive
-                    ? 'bg-primary/20 text-white'
-                    : 'text-white/60 hover:text-white hover:bg-white/8'
+                    ? 'bg-[color:var(--surface-high)] text-[color:var(--primary)]'
+                    : 'text-[color:var(--on-surface-soft)] hover:text-[color:var(--on-surface)] hover:bg-[color:var(--surface-lowest)]'
                 }`
               }
             >
@@ -66,21 +63,20 @@ export default function AppShell() {
           ))}
         </nav>
 
-        {/* User footer */}
-        <div className="p-3 border-t border-white/10">
-          <div className="flex items-center gap-3 rounded-lg px-3 py-2.5">
-            <div className="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center flex-shrink-0">
-              <span className="text-white text-xs font-semibold">{initials}</span>
+        <div className="p-4">
+          <div className="surface-card !p-4 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-[color:var(--surface-high)] flex items-center justify-center flex-shrink-0">
+              <span className="text-[color:var(--primary)] text-xs font-semibold">{initials}</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-white text-xs font-medium truncate">{user?.fullName ?? 'User'}</p>
-              <span className="inline-flex rounded-full bg-primary/20 px-1.5 py-0.5 text-[10px] text-primary/90 font-medium">{roleBadge}</span>
+              <p className="text-xs font-medium truncate">{user?.fullName ?? 'User'}</p>
+              <span className="inline-flex rounded-full bg-[color:var(--surface-high)] px-2 py-0.5 text-[10px] text-[color:var(--primary)] font-medium">{roleBadge}</span>
             </div>
           </div>
           <button
             type="button"
             onClick={handleLogout}
-            className="mt-1 w-full rounded-lg bg-white/8 hover:bg-white/15 px-3 py-2 text-sm text-white/70 hover:text-white transition-all text-left flex items-center gap-2"
+            className="mt-2 w-full rounded-2xl bg-[color:var(--surface-lowest)] hover:bg-[color:var(--surface-high)] px-4 py-3 text-sm text-[color:var(--on-surface-soft)] hover:text-[color:var(--on-surface)] transition-all text-left flex items-center gap-2"
           >
             <span>🚪</span>
             <span>Logout</span>
@@ -89,19 +85,22 @@ export default function AppShell() {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top header */}
-        <header className="h-14 border-b border-gray-100 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30">
-          <p className="font-semibold text-sm text-gray-800 dark:text-gray-200">{roleLabel}</p>
-          <div className="flex items-center gap-3">
-            <span className="hidden sm:block text-sm text-gray-500 dark:text-gray-400">{user?.fullName}</span>
-            <Link to="/" className="btn-secondary !px-3 !py-1.5 !text-xs">
-              ← Home
-            </Link>
+        <header className="sticky top-0 z-30 p-3 sm:p-4">
+          <div className="glass-card h-14 flex items-center justify-between px-4 sm:px-6">
+            <p className="font-semibold text-sm [font-family:var(--font-display)]">{roleLabel}</p>
+            <div className="flex items-center gap-3">
+              <span className="hidden sm:block text-sm text-[color:var(--on-surface-soft)]">{user?.fullName}</span>
+              <Link to="/" className="btn-secondary !px-4 !py-2 !text-xs">
+                Back Home
+              </Link>
+            </div>
           </div>
         </header>
 
-        <main className="p-4 sm:p-6 lg:p-8 flex-1">
-          <Outlet />
+        <main className="px-4 pb-10 pt-3 sm:px-6 lg:px-8 flex-1">
+          <div className="mx-auto max-w-7xl">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

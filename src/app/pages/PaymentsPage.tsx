@@ -68,14 +68,14 @@ export default function PaymentsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Payments</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">Monitor fees and outstanding balances.</p>
+        <p className="text-sm text-[color:var(--on-surface-soft)]">Monitor fees and outstanding balances.</p>
       </div>
 
-      <section className="rounded-xl border border-primary/15 bg-white dark:bg-gray-900 p-4">
+      <section className="surface-card !p-4">
         <h2 className="font-semibold mb-3">Create Payment</h2>
         <form className="grid grid-cols-1 md:grid-cols-2 gap-3" onSubmit={handleCreate}>
           <select
-            className="rounded-lg border border-primary/25 px-3 py-2"
+            className="form-input"
             value={form.studentId}
             onChange={(event) => setForm((prev) => ({ ...prev, studentId: event.target.value }))}
             required
@@ -89,7 +89,7 @@ export default function PaymentsPage() {
           </select>
           <input
             required
-            className="rounded-lg border border-primary/25 px-3 py-2"
+            className="form-input"
             placeholder="Month (e.g. 2026-03)"
             value={form.month}
             onChange={(event) => setForm((prev) => ({ ...prev, month: event.target.value }))}
@@ -99,13 +99,13 @@ export default function PaymentsPage() {
             type="number"
             min="0"
             step="0.01"
-            className="rounded-lg border border-primary/25 px-3 py-2"
+            className="form-input"
             placeholder="Amount"
             value={form.amount}
             onChange={(event) => setForm((prev) => ({ ...prev, amount: event.target.value }))}
           />
           <select
-            className="rounded-lg border border-primary/25 px-3 py-2"
+            className="form-input"
             value={form.status}
             onChange={(event) => setForm((prev) => ({ ...prev, status: event.target.value as 'paid' | 'unpaid' }))}
           >
@@ -120,17 +120,17 @@ export default function PaymentsPage() {
         </form>
       </section>
 
-      {loading ? <p className="text-gray-500">Loading payments...</p> : null}
-      {error ? <p className="text-sm text-accent">{error}</p> : null}
+      {loading ? <p className="text-[color:var(--on-surface-soft)]">Loading payments...</p> : null}
+      {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
       {!loading && payments.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-primary/30 p-8 text-center text-gray-500">
+        <div className="surface-tier-low rounded-2xl p-8 text-center text-[color:var(--on-surface-soft)]">
           No payments recorded yet.
         </div>
       ) : (
-        <div className="rounded-xl border border-primary/15 overflow-hidden bg-white dark:bg-gray-900">
+        <div className="table-shell">
           <table className="w-full text-sm">
-            <thead className="bg-primary/5 text-left">
+            <thead className="surface-tier-low text-left">
               <tr>
                 <th className="px-4 py-3">Student</th>
                 <th className="px-4 py-3">Month</th>
@@ -141,19 +141,19 @@ export default function PaymentsPage() {
             </thead>
             <tbody>
               {payments.map((payment) => (
-                <tr key={payment.id} className="border-t border-gray-100 dark:border-gray-800">
+                <tr key={payment.id} className="border-t border-[color:var(--outline-ghost)]">
                   <td className="px-4 py-3">{payment.student?.fullName ?? payment.studentId}</td>
                   <td className="px-4 py-3">{payment.month}</td>
                   <td className="px-4 py-3">{payment.amount}</td>
                   <td className="px-4 py-3">
                     <span
-                      className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${payment.status === 'paid' ? 'bg-primary/15 text-primary' : 'bg-accent/15 text-accent'}`}
+                      className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${payment.status === 'paid' ? 'surface-tier-high text-[color:var(--primary)]' : 'surface-tier-container text-[color:#a6673f]'}`}
                     >
                       {payment.status}
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <button className="text-primary hover:underline" onClick={() => toggleStatus(payment)}>
+                    <button className="text-[color:var(--primary)] hover:underline" onClick={() => toggleStatus(payment)}>
                       Mark {payment.status === 'paid' ? 'Unpaid' : 'Paid'}
                     </button>
                   </td>

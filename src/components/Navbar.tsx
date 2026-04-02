@@ -16,25 +16,31 @@ export default function Navbar() {
     <motion.header
       initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="sticky top-0 z-50 bg-white/85 dark:bg-gray-900/85 backdrop-blur border-b border-gray-100 dark:border-gray-800 transition-colors"
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="sticky top-4 z-50 px-3 sm:px-6"
     >
-      <nav className="container flex items-center justify-between py-3">
+      <nav className="container glass-card flex items-center justify-between px-5 py-3 sm:px-7">
         <Link to="/" className="flex items-center gap-2" aria-label="NovaraTutor home">
-          <Logo className="h-10 w-10" />
+          <Logo className="h-9 w-9" />
         </Link>
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden items-center gap-7 md:flex">
           {navItems.map((item) => (
-            <a key={item.href} href={item.href} className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark transition-colors">
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-sm font-medium text-[color:var(--on-surface-soft)] transition-colors hover:text-[color:var(--primary)]"
+            >
               {item.label}
             </a>
           ))}
-          <Link to="/login" className="btn-primary">Sign In</Link>
+          <Link to="/login" className="btn-primary">
+            Sign In <span className="ml-2">→</span>
+          </Link>
         </div>
         <div className="flex md:hidden items-center gap-2">
           <button
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="inline-flex items-center justify-center rounded-full p-2 text-[color:var(--on-surface)] hover:bg-[color:var(--surface-low)]"
             aria-label="Toggle menu"
             aria-expanded={open}
           >
@@ -50,21 +56,23 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="md:hidden border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900"
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden"
           >
-            <div className="container py-3 flex flex-col gap-2">
+            <div className="container mt-2 glass-card py-3 flex flex-col gap-2 px-5">
               {navItems.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="py-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary-dark"
+                  className="py-2 text-[color:var(--on-surface-soft)] hover:text-[color:var(--primary)]"
                 >
                   {item.label}
                 </a>
               ))}
-              <Link to="/login" onClick={() => setOpen(false)} className="mt-2 w-max btn-primary">Sign In</Link>
+              <Link to="/login" onClick={() => setOpen(false)} className="mt-2 w-max btn-primary">
+                Sign In <span className="ml-2">→</span>
+              </Link>
             </div>
           </motion.div>
         ) : null}

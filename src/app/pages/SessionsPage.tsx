@@ -55,14 +55,14 @@ export default function SessionsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Sessions</h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400">Track lessons and attendance.</p>
+        <p className="text-sm text-[color:var(--on-surface-soft)]">Track lessons and attendance.</p>
       </div>
 
-      <section className="rounded-xl border border-primary/15 bg-white dark:bg-gray-900 p-4">
+      <section className="surface-card !p-4">
         <h2 className="font-semibold mb-3">Create Session</h2>
         <form className="grid grid-cols-1 md:grid-cols-2 gap-3" onSubmit={handleSubmit}>
           <select
-            className="rounded-lg border border-primary/25 px-3 py-2"
+            className="form-input"
             value={form.studentId}
             onChange={(event) => setForm((prev) => ({ ...prev, studentId: event.target.value }))}
             required
@@ -75,14 +75,14 @@ export default function SessionsPage() {
             ))}
           </select>
           <input
-            className="rounded-lg border border-primary/25 px-3 py-2"
+            className="form-input"
             placeholder="Tutor ID (optional)"
             value={form.tutorId}
             onChange={(event) => setForm((prev) => ({ ...prev, tutorId: event.target.value }))}
           />
           <input
             required
-            className="rounded-lg border border-primary/25 px-3 py-2"
+            className="form-input"
             placeholder="Subject"
             value={form.subject}
             onChange={(event) => setForm((prev) => ({ ...prev, subject: event.target.value }))}
@@ -90,7 +90,7 @@ export default function SessionsPage() {
           <input
             required
             type="datetime-local"
-            className="rounded-lg border border-primary/25 px-3 py-2"
+            className="form-input"
             value={form.date}
             onChange={(event) => setForm((prev) => ({ ...prev, date: event.target.value }))}
           />
@@ -110,17 +110,17 @@ export default function SessionsPage() {
         </form>
       </section>
 
-      {loading ? <p className="text-gray-500">Loading sessions...</p> : null}
-      {error ? <p className="text-sm text-accent">{error}</p> : null}
+      {loading ? <p className="text-[color:var(--on-surface-soft)]">Loading sessions...</p> : null}
+      {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
       {!loading && sessions.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-primary/30 p-8 text-center text-gray-500">
+        <div className="surface-tier-low rounded-2xl p-8 text-center text-[color:var(--on-surface-soft)]">
           No sessions yet.
         </div>
       ) : (
-        <div className="rounded-xl border border-primary/15 overflow-hidden bg-white dark:bg-gray-900">
+        <div className="table-shell">
           <table className="w-full text-sm">
-            <thead className="bg-primary/5 text-left">
+            <thead className="surface-tier-low text-left">
               <tr>
                 <th className="px-4 py-3">Student</th>
                 <th className="px-4 py-3">Subject</th>
@@ -130,7 +130,7 @@ export default function SessionsPage() {
             </thead>
             <tbody>
               {sessions.map((session) => (
-                <tr key={session.id} className="border-t border-gray-100 dark:border-gray-800">
+                <tr key={session.id} className="border-t border-[color:var(--outline-ghost)]">
                   <td className="px-4 py-3">{session.student?.fullName ?? session.studentId}</td>
                   <td className="px-4 py-3">{session.subject}</td>
                   <td className="px-4 py-3">{new Date(session.date).toLocaleString()}</td>

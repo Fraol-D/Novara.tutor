@@ -147,40 +147,45 @@ export default function AccountSetupPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background dark:bg-background-dark">
-        <p className="text-sm text-gray-500">Loading setup...</p>
+      <div className="min-h-screen flex items-center justify-center manuscript-surface">
+        <p className="text-sm text-[color:var(--on-surface-soft)]">Loading setup...</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-background dark:bg-background-dark py-10 px-4">
+    <div className="min-h-screen manuscript-surface py-10 px-4">
       <div className="mx-auto max-w-3xl space-y-6 animate-fade-in">
-        <div className="surface-card p-6">
-          <h1 className="text-3xl font-bold">Set Up Your Account</h1>
-          <p className="mt-2 text-gray-500 dark:text-gray-400">Complete these steps to start using your portal.</p>
+        <div className="surface-card">
+          <p className="eyebrow">Onboarding</p>
+          <h1 className="mt-4 text-3xl font-bold">Set Up Your Account</h1>
+          <p className="mt-2 text-[color:var(--on-surface-soft)]">Complete these steps to start using your portal.</p>
 
           <div className="mt-6 flex items-center gap-3 text-sm">
             {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-center gap-2">
                 <span
-                  className={`inline-flex h-8 w-8 items-center justify-center rounded-full border ${currentStep >= step ? 'border-primary bg-primary text-white' : 'border-gray-300 text-gray-500'}`}
+                  className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${
+                    currentStep >= step
+                      ? 'bg-[color:var(--primary)] text-white'
+                      : 'surface-tier-low text-[color:var(--on-surface-soft)]'
+                  }`}
                 >
                   {step}
                 </span>
-                {step < 3 ? <span className="h-px w-8 bg-gray-300" /> : null}
+                {step < 3 ? <span className="h-px w-8 bg-[color:var(--outline-ghost)]" /> : null}
               </div>
             ))}
           </div>
         </div>
 
-        <section className="surface-card p-6">
+        <section className="surface-card">
           <h2 className="text-xl font-semibold">{stepTitle}</h2>
 
           {currentStep === 1 ? (
             <form onSubmit={submitLocation} className="mt-5 space-y-4">
               <div>
-                <label className="mb-1 block text-sm font-medium">Select Country</label>
+                <label className="mb-1 block text-xs uppercase tracking-[0.12em] text-[color:var(--on-surface-soft)]">Select Country</label>
                 <input
                   className="form-input"
                   value={country}
@@ -191,7 +196,7 @@ export default function AccountSetupPage() {
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium">Select State</label>
+                <label className="mb-1 block text-xs uppercase tracking-[0.12em] text-[color:var(--on-surface-soft)]">Select State</label>
                 <input
                   className="form-input"
                   value={stateName}
@@ -201,7 +206,7 @@ export default function AccountSetupPage() {
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium">Phone Number</label>
+                <label className="mb-1 block text-xs uppercase tracking-[0.12em] text-[color:var(--on-surface-soft)]">Phone Number</label>
                 <input
                   className="form-input"
                   value={phone}
@@ -219,10 +224,10 @@ export default function AccountSetupPage() {
 
           {currentStep === 2 ? (
             <form onSubmit={submitPhoto} className="mt-5 space-y-4">
-              <p className="text-sm text-gray-500">This step is optional. You can skip and add a photo later.</p>
+              <p className="text-sm text-[color:var(--on-surface-soft)]">This step is optional. You can skip and add a photo later.</p>
 
               <div>
-                <label className="mb-1 block text-sm font-medium">Profile Picture URL</label>
+                <label className="mb-1 block text-xs uppercase tracking-[0.12em] text-[color:var(--on-surface-soft)]">Profile Picture URL</label>
                 <input
                   className="form-input"
                   value={profilePictureUrl}
@@ -244,12 +249,16 @@ export default function AccountSetupPage() {
 
           {currentStep === 3 ? (
             <form onSubmit={submitRole} className="mt-5 space-y-4">
-              <p className="text-sm text-gray-600 dark:text-gray-300">Which of these best describes you?</p>
+              <p className="text-sm text-[color:var(--on-surface-soft)]">Which of these best describes you?</p>
 
               <div className="space-y-3">
                 <button
                   type="button"
-                  className={`w-full rounded-lg border p-4 text-left transition ${accountType === 'PARENT' ? 'border-primary bg-primary/5' : 'border-gray-200'}`}
+                  className={`w-full rounded-2xl p-4 text-left transition ${
+                    accountType === 'PARENT'
+                      ? 'surface-tier-high text-[color:var(--primary)]'
+                      : 'surface-tier-lowest'
+                  }`}
                   onClick={() => setAccountType('PARENT')}
                 >
                   I&apos;m a parent
@@ -257,7 +266,11 @@ export default function AccountSetupPage() {
 
                 <button
                   type="button"
-                  className={`w-full rounded-lg border p-4 text-left transition ${accountType === 'TUTOR' ? 'border-primary bg-primary/5' : 'border-gray-200'}`}
+                  className={`w-full rounded-2xl p-4 text-left transition ${
+                    accountType === 'TUTOR'
+                      ? 'surface-tier-high text-[color:var(--primary)]'
+                      : 'surface-tier-lowest'
+                  }`}
                   onClick={() => setAccountType('TUTOR')}
                 >
                   Applying to become a Tutor
@@ -270,7 +283,7 @@ export default function AccountSetupPage() {
             </form>
           ) : null}
 
-          {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
+          {error ? <p className="mt-4 text-sm text-red-700">{error}</p> : null}
         </section>
       </div>
     </div>

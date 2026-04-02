@@ -1,22 +1,22 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 transition-colors">
-      <div className="container py-8 flex flex-col sm:flex-row gap-6 items-center justify-between">
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+    <footer className="surface-tier-low border-t border-[color:var(--outline-ghost)]">
+      <div className="container flex flex-col gap-5 py-8 text-sm md:flex-row md:items-center md:justify-between">
+        <p className="text-[color:var(--on-surface-soft)]">
           © {new Date().getFullYear()} NovaraTutor. All rights reserved.
         </p>
-        
-        <div className="flex items-center gap-4 text-sm">
-          <a href="#how-it-works" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
+
+        <div className="flex flex-wrap items-center gap-5 text-[color:var(--on-surface-soft)] md:justify-end">
+          <a href="#how-it-works" className="transition-colors hover:text-[color:var(--primary)]">
             How It Works
           </a>
-          <a href="#diagnostic" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
+          <a href="#diagnostic" className="transition-colors hover:text-[color:var(--primary)]">
             What You Get
           </a>
-          <a href="#pricing" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
+          <a href="#pricing" className="transition-colors hover:text-[color:var(--primary)]">
             Pricing
           </a>
-          <a href="#booking" className="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary-dark transition-colors">
+          <a href="#booking" className="transition-colors hover:text-[color:var(--primary)]">
             Book Diagnostic
           </a>
         </div>

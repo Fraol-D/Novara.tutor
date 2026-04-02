@@ -10,14 +10,18 @@ export default function Modal({ title, onClose, children }: ModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <button
         type="button"
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-black/35 backdrop-blur-[2px]"
         aria-label="Close modal"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-xl rounded-2xl bg-white dark:bg-gray-900 border border-primary/20 shadow-[0_16px_40px_rgba(0,0,0,0.2)] p-6">
+      <div className="relative w-full max-w-xl glass-card p-6">
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <button type="button" onClick={onClose} className="text-gray-500 hover:text-text dark:hover:text-text-dark">
+          <h3 className="text-lg font-semibold [font-family:var(--font-display)]">{title}</h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="h-8 w-8 rounded-full text-[color:var(--on-surface-soft)] hover:bg-[color:var(--surface-low)] hover:text-[color:var(--on-surface)]"
+          >
             ✕
           </button>
         </div>

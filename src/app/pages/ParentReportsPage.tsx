@@ -36,9 +36,10 @@ export default function ParentReportsPage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <section className="surface-card p-6 space-y-4">
+      <section className="surface-card space-y-4">
+        <p className="eyebrow">Reporting</p>
         <h1 className="text-2xl font-bold">Assessment Reports</h1>
-        <p className="text-sm text-gray-500">View your child&apos;s weekly assessment report.</p>
+        <p className="text-sm text-[color:var(--on-surface-soft)]">View your child&apos;s weekly assessment report.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <select className="form-input" value={childId} onChange={(event) => setChildId(event.target.value)}>
@@ -54,20 +55,20 @@ export default function ParentReportsPage() {
           <input className="form-input" placeholder="Select Subject" value={subject} onChange={(event) => setSubject(event.target.value)} />
         </div>
 
-        {loading ? <p className="text-sm text-gray-500">Loading reports...</p> : null}
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        {loading ? <p className="text-sm text-[color:var(--on-surface-soft)]">Loading reports...</p> : null}
+        {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
         {!loading && !error ? (
-          <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 space-y-3">
+          <div className="surface-tier-low rounded-2xl p-4 space-y-3">
             {reports.length === 0 ? (
-              <p className="text-sky-700">Please select your child to access their weekly assessment report.</p>
+              <p className="text-[color:var(--on-surface-soft)]">Please select your child to access their weekly assessment report.</p>
             ) : (
               reports.map((report) => (
-                <article key={report.id} className="rounded-lg border border-sky-200 bg-white p-4">
+                <article key={report.id} className="surface-tier-lowest rounded-2xl p-4">
                   <h2 className="font-semibold">{report.title}</h2>
-                  <p className="text-sm text-gray-600">{report.child.firstName} {report.child.lastName} • {report.subject}</p>
+                  <p className="text-sm text-[color:var(--on-surface-soft)]">{report.child.firstName} {report.child.lastName} • {report.subject}</p>
                   <p className="mt-2 text-sm">{report.summary}</p>
-                  <p className="mt-2 text-xs text-gray-500">Published: {new Date(report.publishedAt).toLocaleDateString()}</p>
+                  <p className="mt-2 text-xs text-[color:var(--on-surface-soft)]">Published: {new Date(report.publishedAt).toLocaleDateString()}</p>
                 </article>
               ))
             )}

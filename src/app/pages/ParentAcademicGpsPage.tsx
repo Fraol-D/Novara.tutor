@@ -51,9 +51,10 @@ export default function ParentAcademicGpsPage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <section className="surface-card p-6 space-y-4">
+      <section className="surface-card space-y-4">
+        <p className="eyebrow">Academic GPS</p>
         <h1 className="text-2xl font-bold">Academic GPS</h1>
-        <p className="text-sm text-gray-500">View your child&apos;s tailored curriculum and current progress.</p>
+        <p className="text-sm text-[color:var(--on-surface-soft)]">View your child&apos;s tailored curriculum and current progress.</p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <select className="form-input" value={selectedChildId} onChange={(event) => setSelectedChildId(event.target.value)}>
@@ -68,30 +69,30 @@ export default function ParentAcademicGpsPage() {
           <input className="form-input" placeholder="Select State" value={stateName} onChange={(event) => setStateName(event.target.value)} />
         </div>
 
-        <div className="flex border border-gray-200 rounded-lg overflow-hidden text-sm font-medium">
+        <div className="flex rounded-2xl overflow-hidden text-sm font-medium surface-tier-low">
           <button
             type="button"
-            className={`flex-1 px-4 py-3 ${activeTab === 'syllabus' ? 'bg-primary/10 text-primary' : 'bg-white'}`}
+            className={`flex-1 px-4 py-3 ${activeTab === 'syllabus' ? 'surface-tier-high text-[color:var(--primary)]' : 'text-[color:var(--on-surface-soft)]'}`}
             onClick={() => setActiveTab('syllabus')}
           >
             Custom Syllabus
           </button>
           <button
             type="button"
-            className={`flex-1 px-4 py-3 ${activeTab === 'roadmap' ? 'bg-primary/10 text-primary' : 'bg-white'}`}
+            className={`flex-1 px-4 py-3 ${activeTab === 'roadmap' ? 'surface-tier-high text-[color:var(--primary)]' : 'text-[color:var(--on-surface-soft)]'}`}
             onClick={() => setActiveTab('roadmap')}
           >
             Academic Roadmap
           </button>
         </div>
 
-        {loading ? <p className="text-sm text-gray-500">Loading...</p> : null}
-        {error ? <p className="text-sm text-red-600">{error}</p> : null}
+        {loading ? <p className="text-sm text-[color:var(--on-surface-soft)]">Loading...</p> : null}
+        {error ? <p className="text-sm text-red-700">{error}</p> : null}
 
         {!loading && !error ? (
-          <div className="rounded-lg border border-gray-200 p-4">
+          <div className="surface-tier-low rounded-2xl p-4">
             {activeItems.length === 0 ? (
-              <p className="text-sm text-gray-500">{payload.message ?? 'No data found for this selection yet.'}</p>
+              <p className="text-sm text-[color:var(--on-surface-soft)]">{payload.message ?? 'No data found for this selection yet.'}</p>
             ) : (
               <pre className="text-xs whitespace-pre-wrap">{JSON.stringify(activeItems, null, 2)}</pre>
             )}

@@ -55,10 +55,10 @@ export default function TutorAvailabilityPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold">Availability</h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">
+          <p className="mt-1 text-[color:var(--on-surface-soft)]">
             Select the time slots you&apos;re available to teach each week.
             {totalSlots > 0 && (
-              <span className="ml-2 inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+              <span className="ml-2 inline-flex items-center rounded-full surface-tier-high px-2 py-0.5 text-xs font-medium text-[color:var(--primary)]">
                 {totalSlots} slot{totalSlots !== 1 ? 's' : ''} selected
               </span>
             )}
@@ -66,7 +66,7 @@ export default function TutorAvailabilityPage() {
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
           {saved && (
-            <span className="text-sm text-green-600 dark:text-green-400 font-medium">✓ Saved</span>
+            <span className="text-sm text-emerald-700 font-medium">✓ Saved</span>
           )}
           <button type="button" className="btn-primary" onClick={handleSave}>
             Save Availability
@@ -74,20 +74,20 @@ export default function TutorAvailabilityPage() {
         </div>
       </div>
 
-      <div className="surface-card overflow-hidden">
+      <div className="surface-card overflow-hidden !p-0">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-100 dark:border-gray-800">
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 w-24">Time</th>
+              <tr className="border-b border-[color:var(--outline-ghost)] surface-tier-low">
+                <th className="px-4 py-3 text-left text-xs font-medium text-[color:var(--on-surface-soft)] w-24">Time</th>
                 {DAYS.map((day) => (
-                  <th key={day} className="px-2 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400">
+                  <th key={day} className="px-2 py-3 text-center text-xs font-medium text-[color:var(--on-surface-soft)]">
                     <div>{day.slice(0, 3)}</div>
                     {(availability[day]?.length ?? 0) > 0 && (
                       <button
                         type="button"
                         onClick={() => clearDay(day)}
-                        className="mt-1 text-[10px] text-red-400 hover:text-red-600 transition-colors"
+                        className="mt-1 text-[10px] text-red-500 hover:text-red-700 transition-colors"
                       >
                         clear
                       </button>
@@ -98,8 +98,8 @@ export default function TutorAvailabilityPage() {
             </thead>
             <tbody>
               {TIME_SLOTS.map((slot) => (
-                <tr key={slot} className="border-t border-gray-50 dark:border-gray-800/50">
-                  <td className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400 font-mono">{slot}</td>
+                <tr key={slot} className="border-t border-[color:var(--outline-ghost)]">
+                  <td className="px-4 py-2 text-xs text-[color:var(--on-surface-soft)] font-mono">{slot}</td>
                   {DAYS.map((day) => {
                     const active = isActive(day, slot)
                     return (
@@ -109,8 +109,8 @@ export default function TutorAvailabilityPage() {
                           onClick={() => toggle(day, slot)}
                           className={`w-full rounded-md py-1.5 text-xs font-medium transition-all ${
                             active
-                              ? 'bg-primary text-white shadow-sm hover:bg-primary/80'
-                              : 'bg-gray-100 dark:bg-gray-800 text-gray-400 hover:bg-primary/10 hover:text-primary'
+                              ? 'bg-[color:var(--primary)] text-white shadow-sm hover:opacity-90'
+                              : 'surface-tier-low text-[color:var(--on-surface-soft)] hover:surface-tier-high hover:text-[color:var(--primary)]'
                           }`}
                           aria-label={`${active ? 'Remove' : 'Add'} ${day} ${slot}`}
                           aria-pressed={active}
@@ -127,7 +127,7 @@ export default function TutorAvailabilityPage() {
         </div>
       </div>
 
-      <p className="text-xs text-gray-400 dark:text-gray-600">
+      <p className="text-xs text-[color:var(--on-surface-soft)]">
         Click a cell to toggle availability. Your schedule is saved locally.
       </p>
     </div>

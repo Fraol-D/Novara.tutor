@@ -407,8 +407,8 @@ export default function TutorOnboardingPage() {
 
   if (loading) {
     return (
-      <div className="surface-card p-6">
-        <p className="text-sm text-gray-500">Loading onboarding...</p>
+      <div className="surface-card">
+        <p className="text-sm text-[color:var(--on-surface-soft)]">Loading onboarding...</p>
       </div>
     )
   }
@@ -416,14 +416,15 @@ export default function TutorOnboardingPage() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="surface-card p-6">
+        <p className="eyebrow">Tutor Application</p>
         <h1 className="text-2xl font-bold">Tutor Onboarding</h1>
-        <p className="mt-1 text-gray-500">{progressText}</p>
-        <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+        <p className="mt-1 text-[color:var(--on-surface-soft)]">{progressText}</p>
+        <p className="mt-2 text-sm text-[color:var(--on-surface-soft)]">
           Complete each step in order: language skills, academics, experience, availability, demo videos, and final review.
         </p>
 
-        <div className="mt-5 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/60">
-          <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">Progress Tracker</p>
+        <div className="mt-5 rounded-2xl surface-tier-low p-4">
+          <p className="text-sm font-semibold">Progress Tracker</p>
           <div className="mt-3 overflow-x-auto pb-1">
             <div className="flex min-w-[760px] items-start gap-2">
               {onboardingSteps.map((item, index) => {
@@ -439,10 +440,10 @@ export default function TutorOnboardingPage() {
                         isCompleted
                           ? 'border-emerald-500 bg-emerald-500 text-white'
                           : isActive
-                            ? 'border-accent bg-orange-50 text-accent dark:bg-orange-900/20'
+                            ? 'border-[color:var(--primary)] bg-[color:var(--surface-high)] text-[color:var(--primary)]'
                             : isLocked
-                              ? 'border-gray-300 bg-white text-gray-400 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-500'
-                              : 'border-accent/60 bg-white text-accent hover:border-accent dark:border-accent/50 dark:bg-gray-900'
+                              ? 'border-[color:var(--outline-ghost)] bg-[color:var(--surface-lowest)] text-[color:var(--on-surface-soft)]'
+                              : 'border-[color:var(--outline-ghost)] bg-[color:var(--surface-lowest)] text-[color:var(--on-surface-soft)] hover:border-[color:var(--primary)]'
                       }`}
                       onClick={() => handleStepNavigation(item.id)}
                       disabled={isLocked}
@@ -451,12 +452,12 @@ export default function TutorOnboardingPage() {
                       {String(item.id).padStart(2, '0')}
                     </button>
                     <div className="min-w-0">
-                      <p className={`text-xs font-semibold ${isCompleted ? 'text-emerald-600 dark:text-emerald-400' : isActive ? 'text-accent' : 'text-gray-700 dark:text-gray-200'}`}>
+                      <p className={`text-xs font-semibold ${isCompleted ? 'text-emerald-700' : isActive ? 'text-[color:var(--primary)]' : 'text-[color:var(--on-surface)]'}`}>
                         {item.title}
                       </p>
-                      <p className="text-[11px] text-gray-500 dark:text-gray-400">{item.requirement}</p>
+                      <p className="text-[11px] text-[color:var(--on-surface-soft)]">{item.requirement}</p>
                     </div>
-                    {index < onboardingSteps.length - 1 ? <div className="h-px flex-1 bg-gray-300 dark:bg-gray-600" /> : null}
+                    {index < onboardingSteps.length - 1 ? <div className="h-px flex-1 bg-[color:var(--outline-ghost)]" /> : null}
                   </div>
                 )
               })}
@@ -468,7 +469,7 @@ export default function TutorOnboardingPage() {
       {step === 1 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Language Skills</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Required: Add at least one language and select proficiency.</p>
+          <p className="text-sm text-[color:var(--on-surface-soft)]">Required: Add at least one language and select proficiency.</p>
           {languages.map((entry, index) => (
             <div key={`${entry.language}-${index}`} className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <input
@@ -516,9 +517,9 @@ export default function TutorOnboardingPage() {
       {step === 2 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Academic History</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Required: Add at least one school/college/certification entry.</p>
+          <p className="text-sm text-[color:var(--on-surface-soft)]">Required: Add at least one school/college/certification entry.</p>
           {education.map((entry, index) => (
-            <div key={`education-${index}`} className="rounded-lg border border-gray-200 p-4 space-y-3">
+            <div key={`education-${index}`} className="rounded-2xl surface-tier-low p-4 space-y-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <select
                   className="form-input"
@@ -637,9 +638,9 @@ export default function TutorOnboardingPage() {
       {step === 3 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Teaching and Work Experience</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Required: Add at least one experience entry with organization and title.</p>
+          <p className="text-sm text-[color:var(--on-surface-soft)]">Required: Add at least one experience entry with organization and title.</p>
           {experience.map((entry, index) => (
-            <div key={`experience-${index}`} className="rounded-lg border border-gray-200 p-4 space-y-3">
+            <div key={`experience-${index}`} className="rounded-2xl surface-tier-low p-4 space-y-3">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <select
                   className="form-input"
@@ -710,7 +711,7 @@ export default function TutorOnboardingPage() {
       {step === 4 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Availability</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Required: Add at least one weekly day/time slot.</p>
+          <p className="text-sm text-[color:var(--on-surface-soft)]">Required: Add at least one weekly day/time slot.</p>
           {availability.map((entry, index) => (
             <div key={`availability-${index}`} className="grid grid-cols-1 md:grid-cols-4 gap-3">
               <select
@@ -784,8 +785,8 @@ export default function TutorOnboardingPage() {
       {step === 5 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Language Demonstration Video</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Required: One valid video URL per language (YouTube, Drive, or similar).</p>
-          <div className="rounded-lg bg-primary/10 border border-primary/20 p-4 text-sm">
+          <p className="text-sm text-[color:var(--on-surface-soft)]">Required: One valid video URL per language (YouTube, Drive, or similar).</p>
+          <div className="rounded-2xl surface-tier-low p-4 text-sm">
             <p>
               Record a short video under 10 minutes for each language you added. Upload to YouTube or Google Drive and
               paste each link below.
@@ -818,11 +819,11 @@ export default function TutorOnboardingPage() {
       {step === 6 ? (
         <section className="surface-card p-6 space-y-4">
           <h2 className="text-xl font-semibold">Review and Submit Your Application</h2>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
+          <p className="text-sm text-[color:var(--on-surface-soft)]">
             Once you submit, our team will review your profile and may schedule an interview.
           </p>
 
-          <div className="rounded-lg border border-gray-200 p-4 space-y-2">
+          <div className="rounded-2xl surface-tier-low p-4 space-y-2">
             <p className="text-sm"><strong>Tutor:</strong> {user?.fullName}</p>
             <p className="text-sm"><strong>Languages:</strong> {languages.map((item) => item.language).join(', ') || 'None'}</p>
             <p className="text-sm"><strong>Education Entries:</strong> {education.filter((item) => item.institutionName).length}</p>
@@ -836,8 +837,8 @@ export default function TutorOnboardingPage() {
         </section>
       ) : null}
 
-      {success ? <p className="text-sm text-green-600">{success}</p> : null}
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {success ? <p className="text-sm text-emerald-700">{success}</p> : null}
+      {error ? <p className="text-sm text-red-700">{error}</p> : null}
     </div>
   )
 }

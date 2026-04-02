@@ -9,7 +9,7 @@ const items = [
 
 export default function QualityTutors() {
   return (
-    <section className="py-16 sm:py-20 bg-[#f8fafa] dark:bg-gray-800 transition-colors">
+    <section className="section-manuscript surface-tier-container">
       <div className="container">
         <motion.div
           className="max-w-3xl mx-auto text-center"
@@ -18,8 +18,9 @@ export default function QualityTutors() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl sm:text-4xl font-semibold text-text dark:text-text-dark">Quality Tutors, Clear Outcomes</h2>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
+          <p className="eyebrow mb-4">Tutor Quality</p>
+          <h2 className="text-3xl sm:text-4xl font-semibold">Quality Tutors, Clear Outcomes</h2>
+          <p className="mt-4 text-lg text-[color:var(--on-surface-soft)]">
             Every session stays aligned to the diagnostic plan.
           </p>
         </motion.div>
@@ -30,16 +31,16 @@ export default function QualityTutors() {
             return (
               <motion.div
                 key={item.text}
-                className="rounded-2xl bg-white dark:bg-gray-900 shadow-sm border border-gray-100 dark:border-gray-700 p-6 text-center"
+                className="surface-card !p-6 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
               >
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 dark:bg-primary-dark/15 text-primary dark:text-primary-dark">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full surface-tier-high text-[color:var(--primary)]">
                   <Icon className="h-6 w-6" />
                 </div>
-                <p className="text-base font-semibold text-text dark:text-text-dark">{item.text}</p>
+                <p className="text-base font-semibold">{item.text}</p>
               </motion.div>
             )
           })}
