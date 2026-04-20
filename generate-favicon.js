@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 async function generateFavicons() {
-  const inputPath = join(__dirname, 'public', 'Novara-logo.jpeg')
+  const inputPath = join(__dirname, 'public', 'getdodos-logo.jpeg')
   const logoPath = join(__dirname, 'public', 'logo-navbar.png')
 
   try {

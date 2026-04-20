@@ -94,7 +94,7 @@ export default function Hero() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="eyebrow">Novara Tutor Studio</p>
+            <p className="eyebrow">Getdodos Studio</p>
             <h1 className="mt-2 max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
               <span className="h1-drop">
                 {words.map((word, wordIndex) => {

@@ -44,7 +44,7 @@ export default function Contact() {
         const fallbackRes = await fetch('https://jsonplaceholder.typicode.com/posts', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, message, source: 'novaratutor-landing' }),
+          body: JSON.stringify({ name, email, message, source: 'getdodos-landing' }),
         })
         if (!fallbackRes.ok) throw new Error(`Request failed`)
       }

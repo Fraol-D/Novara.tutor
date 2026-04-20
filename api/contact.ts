@@ -41,8 +41,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (process.env.RESEND_API_KEY) {
       try {
         await resend.emails.send({
-          from: 'NovaraTutor <onboarding@resend.dev>', // Update with your verified domain
-          to: process.env.CONTACT_EMAIL || 'contact@novaratutor.com',
+          from: 'Getdodos <onboarding@resend.dev>', // Update with your verified domain
+          to: process.env.CONTACT_EMAIL || 'contact@getdodos.com',
           subject: `New Contact Form Submission from ${name}`,
           html: `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">

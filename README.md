@@ -1,6 +1,6 @@
-# NovaraTutor
+# Getdodos
 
-An MVP landing page for NovaraTutor — affordable 1:1 online tutoring for U.S. students. Built with Vite + React + TypeScript + Tailwind CSS + Framer Motion.
+An MVP landing page for Getdodos — affordable 1:1 online tutoring for U.S. students. Built with Vite + React + TypeScript + Tailwind CSS + Framer Motion.
 
 ## ✨ Features
 
@@ -189,4 +189,4 @@ To connect a real backend:
 
 ## 📄 License
 
-© 2025 NovaraTutor. All rights reserved.
+© 2025 Getdodos. All rights reserved.

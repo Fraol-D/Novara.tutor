@@ -3,10 +3,10 @@ export default function Footer() {
     <footer className="surface-tier-low border-t border-[color:var(--outline-ghost)]">
       <div className="container flex flex-col gap-5 py-8 text-sm md:flex-row md:items-center md:justify-between">
         <p className="text-[color:var(--on-surface-soft)]">
-          © {new Date().getFullYear()} NovaraTutor. All rights reserved.
+          © {new Date().getFullYear()} Getdodos. All rights reserved.
         </p>
 
-        <div className="flex flex-wrap items-center gap-5 text-[color:var(--on-surface-soft)] md:justify-end">
+        <div className="flex flex-wrap items-center gap-5 text-[color:var(--on-surface-soft)] md:justify-end md:pr-16 lg:pr-20">
           <a href="#how-it-works" className="transition-colors hover:text-[color:var(--primary)]">
             How It Works
           </a>

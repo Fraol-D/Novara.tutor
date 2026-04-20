@@ -92,7 +92,7 @@ export default function LoginPage({ initialMode = 'login' }: LoginPageProps) {
       <div className="w-full max-w-md">
         <div className="glass-card p-8 md:p-10">
           <div className="mb-6 text-center">
-            <span className="eyebrow">Novara Tutor Studio</span>
+            <span className="eyebrow">Getdodos Studio</span>
             <h1 className="mt-4 text-3xl font-semibold">
               {mode === 'login' ? 'Welcome back' : 'Create your account'}
             </h1>

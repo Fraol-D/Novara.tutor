@@ -1,13 +1,13 @@
 // Site configuration - Update with your actual info
 export const siteConfig = {
   contact: {
-    email: 'contact@novaratutor.com', // Replace with your email
+    email: 'contact@getdodos.com', // Replace with your email
     phone: '+1 (555) 123-4567', // Optional
   },
   social: {
     linkedin: 'https://www.linkedin.com/company/109976188/admin/dashboard/',
-    instagram: 'https://www.instagram.com/novaratutor/',
-    x: 'https://x.com/novara_tutor',
+    instagram: 'https://www.instagram.com/getdodos/',
+    x: 'https://x.com/getdodos',
   },
   // Email service configuration (uncomment and add your API key)
   email: {

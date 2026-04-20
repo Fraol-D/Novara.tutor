@@ -61,9 +61,9 @@ Then visit http://localhost:3000 and test the contact form!
    ```bash
    git init
    git add .
-   git commit -m "Initial commit: NovaraTutor landing page"
+   git commit -m "Initial commit: Getdodos landing page"
    git branch -M main
-   git remote add origin https://github.com/YOUR-USERNAME/novaratutor.git
+   git remote add origin https://github.com/YOUR-USERNAME/getdodos.git
    git push -u origin main
    ```
 

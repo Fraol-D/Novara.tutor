@@ -17,7 +17,7 @@ export default function VisualSuccess() {
             <div className="relative mx-auto md:mx-0 w-64 h-64">
               <img 
                 src="/ZIO_0812.jpg"
-                alt="Verified NovaraTutor instructor"
+                alt="Verified Getdodos instructor"
                 className="w-full h-full rounded-2xl object-cover shadow-lg"
               />
               

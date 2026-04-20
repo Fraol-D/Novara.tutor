@@ -20,8 +20,8 @@ export default function Navbar() {
       className="sticky top-4 z-50 px-3 sm:px-6"
     >
       <nav className="container glass-card flex items-center justify-between px-5 py-3 sm:px-7">
-        <Link to="/" className="flex items-center gap-2" aria-label="NovaraTutor home">
-          <Logo className="h-9 w-9" />
+        <Link to="/" className="flex items-center gap-2" aria-label="Getdodos home">
+          <Logo className="h-8 w-8 sm:h-9 sm:w-9" />
         </Link>
         <div className="hidden items-center gap-7 md:flex">
           {navItems.map((item) => (

@@ -10,9 +10,9 @@ export default function About() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-2xl sm:text-3xl font-semibold text-text dark:text-text-dark">About NovaraTutor</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-text dark:text-text-dark">About Getdodos</h2>
           <p className="mt-4 text-gray-600 dark:text-gray-400">
-            NovaraTutor is an innovative online tutoring platform focused on 1-to-1 mentorship and
+            Getdodos is an innovative online tutoring platform focused on 1-to-1 mentorship and
             academic growth. We match students with top tutors who are passionate about helping them
             succeed.
           </p>

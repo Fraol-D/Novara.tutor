@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../state/AuthContext'
+import { useTheme } from '../../contexts/ThemeContext'
 
 const parentNavItems = [
   { label: 'Dashboard', to: '/app/parent', icon: '📊' },
@@ -14,10 +15,12 @@ const tutorNavItems = [
 
 export default function AppShell() {
   const { user, role, clearSession } = useAuth()
+  const { theme } = useTheme()
   const navigate = useNavigate()
   const navItems = role === 'tutor' ? tutorNavItems : parentNavItems
   const roleLabel = role === 'tutor' ? 'Tutor Portal' : 'Parent Dashboard'
   const roleBadge = role === 'tutor' ? 'Tutor' : 'Parent'
+  const brandIconSrc = theme === 'dark' ? '/getdodos-icon-dark.png' : '/getdodos-icon-light.png'
 
   const handleLogout = () => {
     clearSession()
@@ -33,11 +36,13 @@ export default function AppShell() {
       <aside className="hidden w-72 md:flex md:flex-col surface-tier-container">
         <div className="px-6 pb-4 pt-7">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="h-9 w-9 rounded-xl bg-[color:var(--surface-highest)] flex items-center justify-center">
-              <span className="text-[color:var(--primary)] text-sm font-bold">NV</span>
-            </div>
+            <img
+              src={brandIconSrc}
+              alt="Getdodos Logo"
+              className="h-9 w-9"
+            />
             <div>
-              <p className="text-sm font-semibold leading-tight [font-family:var(--font-display)]">Novara Tutor</p>
+              <p className="text-sm font-semibold leading-tight [font-family:var(--font-display)]">Getdodos</p>
               <p className="text-[10px] text-[color:var(--on-surface-soft)] uppercase tracking-[0.12em]">{roleLabel}</p>
             </div>
           </Link>
